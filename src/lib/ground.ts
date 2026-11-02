@@ -58,6 +58,8 @@ export function classifyPoint(x: number, z: number, c: GroundCtx): GroundClass {
   if (c.phase >= 2) {
     if (rectCirclesPoint(c.apron, x, z)) return 'paved'
     if (rectCirclesPoint({ x: ENTRANCE.waste.x, z: ENTRANCE.waste.z, w: ENTRANCE.waste.w, d: ENTRANCE.waste.d, rot: 0 }, x, z)) return 'paved'
+    const dp = ENTRANCE.drive.pts
+    for (let i = 0; i < dp.length - 1; i++) if (distToSegment(x, z, dp[i], dp[i + 1]) <= ENTRANCE.drive.width / 2) return 'paved'
     const half = c.bwWidth / 2
     for (let i = 0; i < c.bw.length - 1; i++) {
       if (distToSegment(x, z, [c.bw[i].x, c.bw[i].z], [c.bw[i + 1].x, c.bw[i + 1].z]) <= half) return 'deck'
@@ -85,6 +87,10 @@ export function exclusions(c: GroundCtx): { rect: Rect; pad: number }[] {
 }
 
 export function nearBoardwalk(x: number, z: number, c: GroundCtx, clearance: number) {
+  if (c.phase >= 2) {
+    const dp = ENTRANCE.drive.pts
+    for (let i = 0; i < dp.length - 1; i++) if (distToSegment(x, z, dp[i], dp[i + 1]) < ENTRANCE.drive.width / 2 + clearance + 0.3) return true
+  }
   const half = c.bwWidth / 2 + clearance
   for (let i = 0; i < c.bw.length - 1; i += 1)
     if (distToSegment(x, z, [c.bw[i].x, c.bw[i].z], [c.bw[i + 1].x, c.bw[i + 1].z]) < half) return true

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { HOUSE_EXISTING, GROUND_FLOOR_LEFT, PLOT, SPOT_HEIGHTS, TERRAIN_Y0 } from '../data/site'
+import { HOUSE_EXISTING, HOUSE_EXTENSION, GROUND_FLOOR_LEFT, PLOT, SPOT_HEIGHTS, TERRAIN_Y0 } from '../data/site'
 
 export type V2 = [number, number]
 
@@ -192,9 +192,9 @@ export function elevation(x: number, z: number) {
   let h = planeH(x, z) + sr / sw
   h += (fbm(x * 0.35, z * 0.35) - 0.5) * 0.09 // micro-relief
   // level pad below existing house + extension (finished floor at 148.10)
-  const b = HOUSE_EXISTING
+  const b = { x0: Math.min(HOUSE_EXISTING.x0, HOUSE_EXTENSION.x0), x1: Math.max(HOUSE_EXISTING.x1, HOUSE_EXTENSION.x1), z0: HOUSE_EXTENSION.z0, z1: HOUSE_EXISTING.z1 }
   const dx = Math.max(b.x0 - 1 - x, 0, x - (b.x1 + 1))
-  const dz = Math.max(b.z0 - 1 - z, 0, z - (b.z1 + 4.4))
+  const dz = Math.max(b.z0 - 1 - z, 0, z - (b.z1 + 4.4 - 3.3))
   const dist = Math.hypot(dx, dz)
   const wPad = 1 - smooth(0, 4, dist)
   h = lerp(h, PAD_Y - 0.12, wPad)

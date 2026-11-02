@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { useStore } from '../store'
-import { HOUSE_EXISTING, HOUSE_EXTENSION, TERRACE, SHED_EXISTING, TERRAIN_Y0, GROUND_FLOOR_LEFT } from '../data/site'
+import { HOUSE_EXISTING, TERRACE, SHED_EXISTING, TERRAIN_Y0, GROUND_FLOOR_LEFT } from '../data/site'
 import { terrainY, TERRACE_DECK_Y } from '../lib/geometry'
 import { B, Cyl, Wall, Glazing, Gable, GableRoof, type Opening } from './prims'
 import { M, flatMat } from './materials'
 import { usePick, useSunState } from './env'
 import { HouseInterior } from './HouseInterior'
+import { GarageExtension } from './Garage'
 
 const W = 4.2
 const T = 0.3
@@ -119,33 +120,23 @@ export function House() {
   const interiors = useStore((s) => s.layers.interiors)
   const { night, snow } = useSunState()
   const pickHouse = usePick('house')
-  const pickExt = usePick('extension')
   const pickTerrace = usePick('terrace')
   const pickShed = usePick('shed')
   const extOn = phase >= 1
-  const charredNew = useMemo(() => {
-    const m = M.charred.clone()
-    m.color = new THREE.Color('#ffe9da')
-    return m
-  }, [])
   void snow
 
   const e = HOUSE_EXISTING
   const x = (e.x0 + e.x1) / 2
   const zE = (e.z0 + e.z1) / 2 // existing centre
-  const zX = (HOUSE_EXTENSION.z0 + HOUSE_EXTENSION.z1) / 2
   const y0 = HOUSE_Y0
   const Lx = 7.4
-  const Lext = 3.3
 
   const eastEx: Opening[] = [
-    o(-3.0, -1.4, 0.9, 2.3, { mullions: 1 }),
-    o(-0.9, 0.0, 0, 2.2, { door: true }), // entrance door from the stepping-stone path
-    o(1.0, 3.5, 0, 2.4, { mullions: 1, door: true }),
+    o(-3.0, -1.4, 0.9, 2.3, { mullions: 1 }), // bathroom / loft window
+    o(-0.9, 0.0, 0, 2.2, { door: true }), // entrance door
+    o(1.0, 3.5, 0, 2.4, { mullions: 1, door: true }), // sliding door to the terrace
   ]
-  const westEx: Opening[] = [o(-2.4, -1.4, 1.5, 2.4)]
-  const eastExt: Opening[] = [o(-1.3, 1.3, 0.5, 2.4, { mullions: 2 })]
-  const westExt: Opening[] = [o(-1.2, -0.1, 1.0, 1.95), o(0.3, 1.5, 1.0, 2.1)] // kitchen sink window + living window
+  const westEx: Opening[] = [o(-3.2, -2.3, 1.1, 2.0), o(1.2, 2.6, 1.0, 1.95)]
   const northOps: Opening[] = [ox(-0.7, 0.7, 2.5, 2.86)] // clerestory above the sleeping loft
   const southOps: Opening[] = [ox(-1.5, 1.5, 0.15, 2.7, { mullions: 2 })]
 
@@ -159,9 +150,9 @@ export function House() {
         <LongWall side={1} len={Lx} ops={eastEx} mat={M.charred} y0={y0} />
         <LongWall side={-1} len={Lx} ops={westEx} mat={M.charred} y0={y0} />
         <EndWall z={-Lx / 2} ops={northOps} mat={M.larchWarm} gableMat={M.larchWarm} face={-1} />
-        {!extOn && <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />}
+        <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />
         <group visible={!interiors}>
-          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[0.3, extOn ? 0 : 0.3]} />
+          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[extOn ? 0 : 0.3, 0.3]} />
         </group>
         {/* skylight */}
         <group position={[-0.95, EAVE + 0.55, 0.4]} rotation={[0, 0, PITCH]}>
@@ -178,29 +169,13 @@ export function House() {
         <Cyl at={[W / 2 + 0.06, 1.45, -Lx / 2 + 0.2]} r={0.045} h={2.9} m={M.steel} seg={8} />
       </group>
 
-      {extOn && (
-        <group position={[x, y0, zX]} {...pickExt}>
-          <B at={[0, -0.18, 0]} s={[W + 0.1, 0.36, Lext + 0.05]} m={M.concrete} />
-          <B at={[0, 0.0, 0]} s={[W - 0.1, 0.02, Lext]} m={M.light} cast={false} />
-          <LongWall side={1} len={Lext} ops={eastExt} mat={charredNew} y0={y0} />
-          <LongWall side={-1} len={Lext} ops={westExt} mat={charredNew} y0={y0} />
-          <EndWall z={Lext / 2} ops={southOps} mat={M.larchNew} gableMat={M.larchNew} face={1} />
-          <group visible={!interiors}>
-            <GableRoof W={W} L={Lext} eave={EAVE} pitch={PITCH} endOv={[0, 0.35]} />
-          </group>
-          {/* stove flue through the west roof slope */}
-          <Cyl at={[-1.35, 3.85, 0.95]} r={0.08} h={2.6} m={M.steel} seg={10} />
-          <Cyl at={[-1.35, 5.2, 0.95]} r={0.12} h={0.12} m={M.steel} seg={10} />
-          <B at={[W / 2 + 0.09, 1.9, -1.4]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
-          <B at={[W / 2 + 0.09, 1.9, 1.4]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
-        </group>
-      )}
-      {/* interior: Japandi with sleeping loft — spans the finished house (existing 7.4 m + extension 3.3 m) */}
-      <group position={[x, y0, (e.z0 + HOUSE_EXTENSION.z1) / 2]}>
-        <HouseInterior ext={extOn} />
-        <pointLight position={[0, 2.3, -3.2]} intensity={4 + 6 * night} distance={8} color="#ffc98a" decay={1.6} />
-        <pointLight position={[0, 3.0, 1.0]} intensity={5 + 6 * night} distance={10} color="#ffd8a8" decay={1.6} />
-        {extOn && <pointLight position={[0, 2.4, 4.2]} intensity={4 + 5 * night} distance={8} color="#ffd8a8" decay={1.6} />}
+      {extOn && <GarageExtension />}
+      {/* interior: Japandi with sleeping loft — the whole program sits inside the existing 4.2 × 7.4 m body */}
+      <group position={[x, y0, zE]}>
+        <HouseInterior />
+        <pointLight position={[0, 2.0, -2.3]} intensity={4 + 6 * night} distance={8} color="#ffc98a" decay={1.6} />
+        <pointLight position={[0, 3.0, 0.6]} intensity={5 + 6 * night} distance={10} color="#ffd8a8" decay={1.6} />
+        <pointLight position={[0, 2.4, 2.6]} intensity={4 + 5 * night} distance={8} color="#ffd8a8" decay={1.6} />
       </group>
       {extOn && <Terrace onPick={pickTerrace} />}
       {!extOn && <ExistingShed onPick={pickShed} />}

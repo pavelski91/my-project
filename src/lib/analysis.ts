@@ -155,7 +155,7 @@ export function greenhouseSolar(layout: Layout, phase: number, releaseSecond: bo
   const gh = layout.structures.find((s) => s.kind === 'greenhouse')
   if (!gh) return null
   const occ: Occluder[] = [{ rect: boxToRect(HOUSE_EXISTING), h: 4.7 }]
-  occ.push({ rect: boxToRect(HOUSE_EXTENSION), h: 4.7 })
+  occ.push({ rect: boxToRect(HOUSE_EXTENSION), h: 4.3 })
   if (!releaseSecond) occ.push({ rect: boxToRect(SECOND_DWELLING), h: 4.7 })
   occ.push({ rect: boxToRect(TERRACE), h: 0.1 })
   for (const s of layout.structures) if (s.kind !== 'greenhouse' && s.phase <= phase) occ.push({ rect: s, h: STRUCT_H[s.kind] })

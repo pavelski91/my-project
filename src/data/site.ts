@@ -83,8 +83,8 @@ export interface Box {
 
 /** Existing house footprint (left dwelling), long axis N-S, from the PDF hatch. */
 export const HOUSE_EXISTING: Box = { x0: 5.2, z0: 12.7, x1: 9.4, z1: 20.1 }
-/** Planned extension toward the south. +3.3 m so total length ≈ 10.7 m, matching the supplied floor plan (≈2.5 : 1). */
-export const HOUSE_EXTENSION: Box = { x0: 5.2, z0: 20.1, x1: 9.4, z1: 23.4 }
+/** Planned extension (garage for 2 cars) behind the sleeping-loft end, i.e. on the NORTH side facing the entrance drive. (old note: +3.3 m so total length ≈ 10.7 m, matching the supplied floor plan (≈2.5 : 1). */
+export const HOUSE_EXTENSION: Box = { x0: 4.4, z0: 7.2, x1: 10.2, z1: 12.7 }
 /** Main terrace + pergola on the east long side (as in reference renders). */
 export const TERRACE: Box = { x0: 9.4, z0: 16.4, x1: 14.2, z1: 23.6 }
 /** Second dwelling shown on the plan (hatch on the right). Not part of this brief. */
@@ -108,6 +108,8 @@ export const ENTRANCE = {
   service: { x: 12.5 }, // south side service wicket (proposal)
   apron: { x0: 20.0, x1: 29.2, depth: 5.5 }, // paved hardstand (proposal within the plan's 98 m² paved allowance)
   waste: { x: 31.8, z: -1.5, w: 2.4, d: 1.4 },
+  /** drive from the vehicle gate to the garage (permeable pavers / gravel), centre line + width */
+  drive: { pts: [[24.0, -0.8], [22.6, 3.2], [16.0, 5.2], [7.3, 6.6]] as [number, number][], width: 3.2 },
 }
 
 export const SITE_FACTS = {

@@ -16,19 +16,19 @@ export const CATALOG: Record<string, CatalogEntry> = {
     phase: 0,
     status: 'existing',
     description:
-      'A compact gabled timber house, long axis north–south, ground-floor level 148.10 m a.s.l. (p.p.p. on the plan). Black standing-seam roof, vertical timber cladding, dark-framed glazing, a sleeping loft over the bathroom and a high ceiling over the living space (see supplied section).',
+      'A compact gabled timber house, long axis north–south, ground-floor level 148.10 m a.s.l. (p.p.p. on the plan). The whole interior program fits in this body: sleeping loft and bathroom at the north end, stair, dining and living with stove at the south end. Black standing-seam roof, vertical timber cladding, dark-framed glazing, a sleeping loft over the bathroom and a high ceiling over the living space (see supplied section).',
     materials: ['Black standing-seam steel roof, ~40° pitch', 'Vertical timber cladding: charred-look long walls, warm timber gables', 'Dark aluminium window frames, large sliding door to the terrace', 'Light timber and plaster interior, black steel stair/balustrade'],
     notes: ['Footprint ≈ 4.2 × 7.4 m measured from the plan hatch (±0.3 m).', 'Water Ø32 PE, sewer Ø160 PVC and electricity enter from the north (plan).', 'This object stays fixed in every masterplan option.'],
   },
   extension: {
-    title: 'Planned house extension',
-    subtitle: 'Phase 1 — not yet built',
+    title: 'Planned extension — garage for 2 cars',
+    subtitle: 'Phase 1 — behind the sleeping loft, facing the entrance drive',
     phase: 1,
     status: 'planned',
     description:
-      'A 3.3 m southward extension that brings the house to ≈ 10.7 m, matching the supplied floor plan (open living/kitchen, stove and large gable glazing). The roof ridge, cladding, window language and levels continue the existing house; the extension is shown in slightly fresher timber so the two stages are readable.',
-    materials: ['Continuation of the existing roof and cladding system', 'Large glazed south gable and wide glazed east wall', 'Wood stove with stainless flue'],
-    notes: ['Requires removal or relocation of the existing tin garage (verify).', 'Adds ≈ 14 m² to the built area. The development plan lists 70 m² for both dwellings — verify against local plan limits.'],
+      'The extension is added at the back of the house, behind the sleeping-loft end (north side, towards the road and the gate). It is a roofed, wide-span space of ≈ 5.8 × 5.5 m with a low black-roof gable, slatted timber wall on the west and a black steel portal on the drive side: room for two cars side by side, storage along the house wall, an EV charger and bike hooks. The drive from the gate (≈ 3.2 m, permeable pavers) leads straight into it.',
+    materials: ['Black standing-seam roof, 30° pitch, matching the house', 'Vertical timber slats on the west wall and north gable', 'Black powder-coated steel portal and posts', 'Permeable paver floor with concrete wheel strips'],
+    notes: ['Position (north end) and the 2-car size are design assumptions — please confirm against your extension drawings.', 'Water Ø32 and sewer Ø160 from the plan run through this area; they need to be re-routed or protected (verify).', 'Open sides, so it can be treated as a garage shelter / carport — check the rules with your municipality.'],
   },
   terrace: {
     title: 'Main terrace & pergola',

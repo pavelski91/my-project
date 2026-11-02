@@ -75,7 +75,7 @@ export function SitePlanSVG({ svgRef }: { svgRef?: React.RefObject<SVGSVGElement
   const push = (label: string, sub: string, r: Rect, fill: string, kind: string, stroke?: string) => items.push({ n: n++, label, sub, r, fill, stroke, kind })
   push('Existing house', `${(HOUSE_EXISTING.x1 - HOUSE_EXISTING.x0).toFixed(1)} × ${(HOUSE_EXISTING.z1 - HOUSE_EXISTING.z0).toFixed(1)} m · floor 148.10`, boxToRect(HOUSE_EXISTING), '#3b3f40', 'house')
   if (phase >= 1) {
-    push('Planned extension', '+3.3 m south, Phase 1', boxToRect(HOUSE_EXTENSION), '#6b5440', 'ext')
+    push('Planned extension — garage for 2 cars', 'behind the loft, Phase 1', boxToRect(HOUSE_EXTENSION), '#6b5440', 'ext')
     push('Terrace & pergola', 'Phase 1', boxToRect(TERRACE), '#b49a78', 'deck')
   } else push('Existing tin garage', 'g1 · removed in Phase 1', boxToRect(SHED_EXISTING), '#9aa4a6', 'shed')
   layout.structures.filter((s) => s.phase <= phase).forEach((s) => push(s.label, `${s.w.toFixed(1)} × ${s.d.toFixed(1)} m = ${(s.w * s.d).toFixed(1)} m² · Phase ${s.phase}`, s, s.kind === 'bania' ? '#b49a78' : s.kind === 'greenhouse' ? '#cfe0d6' : s.kind === 'workshop' ? '#7a6a55' : s.kind === 'carport' ? '#a9a9a0' : '#3b3f40', s.kind))
@@ -153,6 +153,7 @@ export function SitePlanSVG({ svgRef }: { svgRef?: React.RefObject<SVGSVGElement
         {/* planting */}
         {trees.map((p, i) => <circle key={'t' + i} cx={X(p.x)} cy={Y(p.z)} r={treeR(p.h) * S} fill={p.arch === 'pine' || p.arch === 'spruce' ? '#3d5a3c' : SPECIES[p.sp]?.native ? '#7c9a62' : '#c19a62'} fillOpacity={0.5} stroke="#2f4a2f" strokeOpacity={0.5} strokeWidth="0.6" />)}
         {shrubs.map((p, i) => <circle key={'s' + i} cx={X(p.x)} cy={Y(p.z)} r={Math.max(0.35, p.h * growth * 0.25) * S} fill={SPECIES[p.sp]?.native ? '#a2b87a' : '#d1b27a'} fillOpacity={0.55} />)}
+        {phase >= 2 && <polyline points={ptsStr(ENTRANCE.drive.pts)} stroke="#bdbab0" strokeWidth={ENTRANCE.drive.width * S} fill="none" strokeLinecap="round" strokeLinejoin="round" />}
         {/* stone path */}
         {phase >= 2 && <polyline points={ptsStr(layout.stonePath)} stroke="#8a8579" strokeWidth="3" strokeDasharray="5 6" fill="none" strokeLinecap="round" />}
         {/* boardwalk */}

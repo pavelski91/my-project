@@ -206,6 +206,19 @@ function paintGround(c: HTMLCanvasElement, season: Season, phase: number, layout
     for (let x = a.x - a.w / 2; x <= a.x + a.w / 2; x += 0.6) { g.beginPath(); g.moveTo(X(x), Y(a.z - a.d / 2)); g.lineTo(X(x), Y(a.z + a.d / 2)); g.stroke() }
     for (let z = a.z - a.d / 2; z <= a.z + a.d / 2; z += 0.6) { g.beginPath(); g.moveTo(X(a.x - a.w / 2), Y(z)); g.lineTo(X(a.x + a.w / 2), Y(z)); g.stroke() }
     g.restore()
+    // drive from the gate to the garage
+    g.save()
+    g.strokeStyle = winter ? '#c3c7c8' : '#8b887e'
+    g.lineWidth = ENTRANCE.drive.width * k
+    g.lineCap = 'round'; g.lineJoin = 'round'
+    g.beginPath()
+    ENTRANCE.drive.pts.forEach(([x, z], i) => (i ? g.lineTo(X(x), Y(z)) : g.moveTo(X(x), Y(z))))
+    g.stroke()
+    g.strokeStyle = 'rgba(60,60,55,0.25)'
+    g.lineWidth = 1
+    g.setLineDash([k * 0.6, k * 0.6])
+    g.stroke()
+    g.restore()
     // waste pad
     const w = ENTRANCE.waste
     g.fillStyle = '#7f7d77'
