@@ -132,13 +132,13 @@ export function House() {
   const Lx = 7.4
 
   const eastEx: Opening[] = [
-    o(-3.0, -1.4, 0.9, 2.3, { mullions: 1 }), // bathroom / loft window
+    o(-3.1, -2.7, 0.5, 2.3), // narrow vertical slit window (as in the render)
     o(-0.9, 0.0, 0, 2.2, { door: true }), // entrance door
-    o(1.0, 3.5, 0, 2.4, { mullions: 1, door: true }), // sliding door to the terrace
+    o(1.2, 3.4, 0, 2.25, { mullions: 1, door: true }), // two-panel sliding door to the terrace
   ]
   const westEx: Opening[] = [o(-3.2, -2.3, 1.1, 2.0), o(1.2, 2.6, 1.0, 1.95)]
   const northOps: Opening[] = [ox(-0.7, 0.7, 2.5, 2.86)] // clerestory above the sleeping loft
-  const southOps: Opening[] = [ox(-1.5, 1.5, 0.15, 2.7, { mullions: 2 })]
+  const southOps: Opening[] = [ox(-0.2, 1.6, 0.55, 2.25, { mullions: 1 })] // gable window beside the terrace
 
   // house group for the whole footprint: local z origin at centre of full extension scheme
   return (
