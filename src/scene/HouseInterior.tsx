@@ -84,22 +84,53 @@ export function HouseInterior() {
       {[0, 1, 2].map((i) => <Bi key={i} at={[-1.72, 1.2, -0.85 + i * 0.35]} s={[0.05, 0.75, 0.2]} m={[M.fabricGrey, M.fabricSage, M.fabricLinen][i]} />)}
       <Bi at={[-1.5, 0.22, -1.25]} s={[0.4, 0.05, 0.9]} m={M.light} />
 
-      {/* ---------- KITCHEN galley along the bathroom wall (z −1.98…−1.33) ---------- */}
-      <Bi at={[0.15, 0.45, -1.62]} s={[1.9, 0.9, 0.62]} m={M.light} />
-      <Bi at={[0.15, 0.92, -1.62]} s={[1.94, 0.04, 0.66]} m={M.counter} />
-      <Bi at={[-0.45, 0.935, -1.62]} s={[0.5, 0.02, 0.44]} m={M.steelLight} />
-      <Cyl at={[-0.45, 1.1, -1.82]} r={0.015} h={0.35} m={M.steelLight} seg={6} cast={false} />
-      {[[0.45, -1.62], [0.8, -1.62], [0.45, -1.45], [0.8, -1.45]].map(([x, z], i) => <Cyl key={i} at={[x, 0.945, z]} r={0.09} h={0.01} m={M.steel} seg={16} cast={false} />)}
-      <Bi at={[-0.62, 1.0, -1.62]} s={[0.28, 2.0, 0.6]} m={M.steelLight} />
-      <Bi at={[-0.2, 1.7, -1.82]} s={[1.2, 0.035, 0.2]} m={M.light} />
-      {[0, 1, 2, 3].map((i) => <Cyl key={i} at={[-0.55 + i * 0.3, 1.77, -1.82]} r={0.06} h={0.12} m={i % 2 ? M.ceramic : M.pot} seg={12} cast={false} />)}
+      {/* ---------- KITCHEN: L-shaped cook zone + island (z −2.0…0.5), sofa stays in the living area ---------- */}
+      {/* north run along the bathroom wall: fridge-freezer, tall pantry, 4-ring hob with hood, sink */}
+      <Bi at={[-1.35, 1.0, -1.62]} s={[0.6, 2.0, 0.62]} m={M.steelLight} />
+      <Bi at={[-0.78, 1.0, -1.62]} s={[0.5, 2.0, 0.62]} m={M.light} />
+      <Bi at={[0.22, 0.45, -1.62]} s={[1.5, 0.9, 0.62]} m={M.light} />
+      <Bi at={[0.22, 0.92, -1.62]} s={[1.54, 0.04, 0.66]} m={M.counter} />
+      <Bi at={[-0.25, 0.935, -1.62]} s={[0.5, 0.02, 0.44]} m={M.steelLight} />
+      <Cyl at={[-0.25, 1.1, -1.84]} r={0.015} h={0.35} m={M.steelLight} seg={6} cast={false} />
+      {[[0.5, -1.7], [0.85, -1.7], [0.5, -1.5], [0.85, -1.5]].map(([x, z], i) => <Cyl key={i} at={[x, 0.945, z]} r={0.09} h={0.01} m={M.steel} seg={16} cast={false} />)}
+      <Bi at={[0.68, 1.95, -1.78]} s={[0.7, 0.5, 0.4]} m={M.steel} />
+      <Bi at={[0.68, 2.5, -1.9]} s={[0.2, 0.7, 0.2]} m={M.steel} />
+      {/* west run from the entrance: worktop with window-side herbs and open shelf */}
+      <Bi at={[-1.52, 0.45, -0.2]} s={[0.62, 0.9, 1.5]} m={M.light} />
+      <Bi at={[-1.5, 0.92, -0.2]} s={[0.66, 0.04, 1.54]} m={M.counter} />
+      <Bi at={[-1.72, 1.65, -0.2]} s={[0.2, 0.035, 1.3]} m={M.light} />
+      {[0, 1, 2, 3, 4].map((i) => <Cyl key={i} at={[-1.72, 1.72, -0.7 + i * 0.27]} r={0.06} h={0.12} m={i % 2 ? M.ceramic : M.pot} seg={12} cast={false} />)}
+      {[0, 1, 2].map((i) => <Cyl key={'h' + i} at={[-1.5, 1.02, -0.6 + i * 0.3]} r={0.07} h={0.14} m={M.pot} seg={10} cast={false} />)}
+      {/* island with prep top, second sink, 3 stools — walkway 0.9 m on each side */}
+      <Bi at={[-0.1, 0.45, -0.45]} s={[1.7, 0.9, 0.8]} m={M.light} cast />
+      <Bi at={[-0.1, 0.92, -0.45]} s={[1.78, 0.05, 0.88]} m={M.oak} cast />
+      <Bi at={[-0.5, 0.95, -0.45]} s={[0.4, 0.02, 0.4]} m={M.steelLight} />
+      <Cyl at={[-0.5, 1.12, -0.6]} r={0.014} h={0.38} m={M.steelLight} seg={6} cast={false} />
+      <Bi at={[0.3, 0.97, -0.45]} s={[0.5, 0.03, 0.3]} m={M.fabricLinen} />
+      {[-0.55, -0.1, 0.35].map((x, i) => (
+        <group key={i} position={[x, 0, 0.25]}>
+          <Cyl at={[0, 0.62, 0]} r={0.17} h={0.04} m={M.light} seg={14} />
+          <Cyl at={[0, 0.3, 0]} r={0.025} h={0.6} m={M.steel} seg={6} cast={false} />
+          <Cyl at={[0, 0.03, 0]} r={0.16} h={0.04} m={M.steel} seg={14} cast={false} />
+        </group>
+      ))}
+      {[-0.4, 0.2].map((x, i) => (
+        <group key={'p' + i} position={[x, 2.45, -0.45]}>
+          <Cyl at={[0, 0.3, 0]} r={0.005} h={1.2} m={M.steel} seg={4} cast={false} />
+          <mesh position={[0, -0.1, 0]} scale={[0.15, 0.13, 0.15]} geometry={ball} material={M.paper} />
+        </group>
+      ))}
+      {/* pots on the hob, board and bowl on the island */}
+      <Cyl at={[0.5, 1.02, -1.7]} r={0.11} h={0.14} m={M.steelLight} seg={14} cast={false} />
+      <Cyl at={[0.85, 0.99, -1.5]} r={0.09} h={0.08} m={M.steel} seg={14} cast={false} />
+      <Cyl at={[0.0, 1.0, -0.4]} r={0.13} h={0.08} m={M.ceramic} seg={16} cast={false} />
 
       {/* ---------- DINING ---------- */}
-      <Cyl at={[0.2, 0.045, 0.95]} r={1.1} h={0.02} m={M.rug} seg={32} cast={false} />
-      <Cyl at={[0.2, 0.73, 0.95]} r={0.55} h={0.04} m={M.light} seg={32} cast />
-      <Cyl at={[0.2, 0.37, 0.95]} r={0.05} h={0.72} m={M.steel} seg={10} cast={false} />
+      <Cyl at={[0.2, 0.045, 1.35]} r={1.1} h={0.02} m={M.rug} seg={32} cast={false} />
+      <Cyl at={[0.2, 0.73, 1.35]} r={0.55} h={0.04} m={M.light} seg={32} cast />
+      <Cyl at={[0.2, 0.37, 1.35]} r={0.05} h={0.72} m={M.steel} seg={10} cast={false} />
       {[0.4, 2.0, 3.6, 5.2].map((a, i) => {
-        const x = 0.2 + Math.cos(a) * 0.8, z = 0.95 + Math.sin(a) * 0.8
+        const x = 0.2 + Math.cos(a) * 0.8, z = 1.35 + Math.sin(a) * 0.8
         return (
           <group key={i} position={[x, 0, z]} rotation={[0, -a - Math.PI / 2, 0]}>
             <Bi at={[0, 0.44, 0]} s={[0.42, 0.04, 0.4]} m={M.light} />
@@ -108,9 +139,9 @@ export function HouseInterior() {
           </group>
         )
       })}
-      <Cyl at={[0.2, 0.9, 0.95]} r={0.07} h={0.16} m={M.pot} seg={10} cast={false} />
-      <Cyl at={[0.2, 3.0, 0.95]} r={0.006} h={1.8} m={M.steel} seg={4} cast={false} />
-      <mesh position={[0.2, 2.05, 0.95]} scale={[0.24, 0.21, 0.24]} geometry={ball} material={M.paper} />
+      <Cyl at={[0.2, 0.9, 1.35]} r={0.07} h={0.16} m={M.pot} seg={10} cast={false} />
+      <Cyl at={[0.2, 3.0, 1.35]} r={0.006} h={1.8} m={M.steel} seg={4} cast={false} />
+      <mesh position={[0.2, 2.05, 1.35]} scale={[0.24, 0.21, 0.24]} geometry={ball} material={M.paper} />
 
       {/* ---------- LIVING: corner sofa along the west wall, side table, stove by the terrace door ---------- */}
       <Bi at={[-0.3, 0.045, 2.45]} s={[2.5, 0.02, 2.0]} m={M.rug} />
@@ -120,14 +151,14 @@ export function HouseInterior() {
       <Bi at={[-0.45, 0.6, 3.5]} s={[1.0, 0.36, 0.14]} m={M.fabricGrey} />
       <Bi at={[-1.35, 0.6, 1.6]} s={[0.12, 0.34, 0.38]} m={M.fabricMustard} rot={[0, 0.2, 0.3]} />
       <Bi at={[-1.35, 0.58, 2.2]} s={[0.12, 0.34, 0.4]} m={M.fabricSage} rot={[0, -0.1, 0.3]} />
-      <Cyl at={[-0.2, 0.2, 2.3]} r={0.34} h={0.4} m={M.tubWood} seg={24} cast />
+      <Cyl at={[-0.45, 0.2, 2.6]} r={0.3} h={0.4} m={M.tubWood} seg={24} cast />
       <Bi at={[1.2, 0.2, 2.6]} s={[0.5, 0.4, 0.8]} m={M.light} />
       <Bi at={[1.4, 0.04, 3.3]} s={[0.8, 0.08, 0.8]} m={M.slate} />
       <Bi at={[1.4, 0.55, 3.3]} s={[0.46, 0.9, 0.46]} m={M.steel} cast />
       <Bi at={[1.17, 0.5, 3.3]} s={[0.02, 0.4, 0.3]} m={M.glassDark} />
       <Cyl at={[1.4, 2.6, 3.3]} r={0.075} h={3.4} m={M.steel} seg={10} cast={false} />
       <Cyl at={[1.4, 4.4, 3.3]} r={0.11} h={0.12} m={M.steel} seg={10} cast={false} />
-      <Plant at={[-1.5, 0, 0.9]} h={1.4} pot={0.22} />
+      <Plant at={[1.5, 0, 1.0]} h={1.2} pot={0.2} />
 
       {/* ---------- CEILING: timber tie beams, track light ---------- */}
       {[-0.4, 1.9].map((z, i) => <Bi key={i} at={[0, 3.12, z]} s={[3.5, 0.13, 0.13]} m={M.tubWood} cast />)}
