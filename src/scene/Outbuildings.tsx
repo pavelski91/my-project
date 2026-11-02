@@ -141,7 +141,7 @@ export function Carport({ s }: { s: Structure }) {
   const interiors = useStore((st) => st.layers.interiors)
   const { glow: night } = useSunState()
   const w = s.w, d = s.d // w = length (drive-in axis, local x), d = width (local z)
-  const car = useMemo(() => ({ body: flatMat('#454b52', 0.32, 0.55), trim: flatMat('#16181a', 0.5, 0.4), tail: new THREE.MeshStandardMaterial({ color: '#8a1414', emissive: '#c01818', emissiveIntensity: 0.4 }) }), [])
+  const car = useMemo(() => ({ body: flatMat('#454b52', 0.32, 0.55), body2: flatMat('#b9bcc0', 0.3, 0.6), trim: flatMat('#16181a', 0.5, 0.4), tail: new THREE.MeshStandardMaterial({ color: '#8a1414', emissive: '#c01818', emissiveIntensity: 0.4 }) }), [])
   const slats = useMemo(() => Array.from({ length: Math.floor((w - 0.2) / 0.16) }, (_, i) => -w / 2 + 0.15 + i * 0.16), [w])
   const h = floor - minT + 0.02
   return (
@@ -173,19 +173,22 @@ export function Carport({ s }: { s: Structure }) {
       <B at={[0.9, 1.34, d / 2 - 0.065]} s={[0.12, 0.03, 0.01]} m={M.lamp} cast={false} />
       {/* bicycle hooks */}
       {[1.5, 1.95].map((x, i) => <B key={i} at={[x, 1.75, d / 2 - 0.1]} s={[0.04, 0.05, 0.12]} m={M.steelLight} cast={false} />)}
-      {/* parked car (scale reference) */}
-      <group position={[-0.35, 0.06, -0.15]}>
-        <B at={[0, 0.55, 0]} s={[4.35, 0.55, 1.78]} m={car.body} cast />
-        <B at={[-0.1, 1.05, 0]} s={[2.35, 0.5, 1.58]} m={car.body} cast />
-        <B at={[-0.1, 1.07, 0]} s={[2.2, 0.38, 1.6]} m={M.glassDark} cast={false} />
-        <B at={[2.17, 0.55, -0.6]} s={[0.04, 0.12, 0.3]} m={M.lamp} cast={false} />
-        <B at={[2.17, 0.55, 0.6]} s={[0.04, 0.12, 0.3]} m={M.lamp} cast={false} />
-        <B at={[-2.17, 0.62, -0.62]} s={[0.04, 0.1, 0.3]} m={car.tail} cast={false} />
-        <B at={[0, 0.3, 0]} s={[4.2, 0.12, 1.7]} m={car.trim} cast={false} />
-        {[[1.35, 0.85], [1.35, -0.85], [-1.35, 0.85], [-1.35, -0.85]].map(([x, z], i) => (
-          <Cyl key={i} at={[x, 0.33, z]} r={0.33} h={0.22} m={M.rubber} rot={[Math.PI / 2, 0, 0]} seg={16} />
-        ))}
-      </group>
+      {/* two parked cars side by side */}
+      {[[-0.35, -1.2, '#454b52'], [-0.35, 0.75, '#b9bcc0']].map(([cx0, cz0, col], k) => (
+        <group key={k} position={[cx0 as number, 0.06, cz0 as number]}>
+          <B at={[0, 0.55, 0]} s={[4.35, 0.55, 1.78]} m={k ? car.body2 : car.body} cast />
+          <B at={[-0.1, 1.05, 0]} s={[2.35, 0.5, 1.58]} m={k ? car.body2 : car.body} cast />
+          <B at={[-0.1, 1.07, 0]} s={[2.2, 0.38, 1.6]} m={M.glassDark} cast={false} />
+          <B at={[-2.17, 0.55, -0.6]} s={[0.04, 0.12, 0.3]} m={M.lamp} cast={false} />
+          <B at={[-2.17, 0.55, 0.6]} s={[0.04, 0.12, 0.3]} m={M.lamp} cast={false} />
+          <B at={[2.17, 0.62, -0.62]} s={[0.04, 0.1, 0.3]} m={car.tail} cast={false} />
+          <B at={[0, 0.3, 0]} s={[4.2, 0.12, 1.7]} m={car.trim} cast={false} />
+          {[[1.35, 0.85], [1.35, -0.85], [-1.35, 0.85], [-1.35, -0.85]].map(([x, z], i) => (
+            <Cyl key={i} at={[x, 0.33, z]} r={0.33} h={0.22} m={M.rubber} rot={[Math.PI / 2, 0, 0]} seg={16} />
+          ))}
+          <mesh visible={false}><boxGeometry args={[0.01, 0.01, 0.01]} /><meshBasicMaterial color={col as string} /></mesh>
+        </group>
+      ))}
       {/* soft light strip under the roof */}
       <B at={[0, 2.46, -d / 2 + 0.3]} s={[w - 0.8, 0.04, 0.06]} m={M.lamp} cast={false} />
       {night > 0.2 && <pointLight position={[0, 2.2, 0]} intensity={3 * night} distance={7} color="#ffd8a0" decay={1.6} />}

@@ -92,7 +92,7 @@ const Z = (id: string, type: ZoneType, label: string, poly: V2[], phase = 5): Zo
 
 /* The whole parcel is available: the plan's second dwelling footprint (x 25–30, z 17–24) is free land. */
 
-const STONE_PATH: V2[] = P(22.2, 3.4, 19.0, 8.0, 15.7, 12.6, 12.6, 15.4)
+const STONE_PATH: V2[] = P(10.4, 5.4, 6.2, 6.8, 3.4, 9.0, 3.2, 13.6, 4.3, 15.0, 4.9, 15.2)
 const NE_SCREEN: V2[] = P(0.6, -0.2, 15.2, -1.6, 15.2, 2.2, 0.6, 2.2)
 
 /* ------------------------------------------------------------------ */
@@ -119,12 +119,13 @@ const B: Layout = {
     S('wellness', 'wellness', 'Gym & sauna pavilion', 21.3, 22.4, 6.6, 4.2, -90, 4, 3.0, [5.4, 8.0], [3.6, 5.0]),
     S('bania', 'bania', 'Bania (wood-fired tub) & deck', 30.4, 22.8, 3.8, 3.4, 0, 4, 1.0, [3.2, 5.2], [3.0, 4.4]),
     S('greenhouse', 'greenhouse', 'Greenhouse', 26.2, 28.5, 4.4, 3.0, 0, 5, 2.0, [3.0, 5.6], [2.4, 3.6]),
+    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 15.5, 5.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
     S('workshop', 'workshop', 'Workshop & tool house', 9.6, 34.0, 3.6, 2.8, 0, 2, 2.0, [2.6, 5.0], [2.2, 3.6]),
   ],
   features: [
     F('dining', 'dining', 'Outdoor dining (terrace)', 11.9, 19.9, 2.6, 1.3, 0, 1),
     F('firepit', 'firepit', 'Fire pit under birches', 29.8, 8.4, 3.0, 3.0, 0, 5),
-    F('hammock', 'hammock', 'Hammock between pines', 15.6, 10.4, 3.6, 0.8, 18, 5),
+    F('hammock', 'hammock', 'Hammock between pines', 16.4, 10.8, 3.6, 0.8, 18, 5),
     F('meditation', 'meditation', 'Japanese meditation corner', 4.6, 31.6, 3.2, 3.2, 0, 5),
     F('tanks-house', 'tanks', 'Rain tanks (house roof) 2 × 1000 L', 10.8, 14.4, 1.2, 2.2, 0, 2),
     F('tanks-gh', 'tanks', 'Rain tank (greenhouse) 1000 L', 23.0, 28.6, 1.2, 1.2, 0, 5),
@@ -186,12 +187,13 @@ const A: Layout = {
     S('wellness', 'wellness', 'Gym & sauna pavilion', 27.4, 22.0, 6.6, 4.2, 0, 4, 3.0, [5.4, 8.0], [3.6, 5.0]),
     S('bania', 'bania', 'Bania (wood-fired tub) & deck', 29.4, 27.9, 4.0, 3.4, 0, 4, 1.0, [3.2, 5.2], [3.0, 4.4]),
     S('greenhouse', 'greenhouse', 'Greenhouse', 14.5, 31.0, 4.4, 3.0, 0, 5, 2.0, [3.0, 5.6], [2.4, 3.6]),
+    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 15.5, 5.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
     S('workshop', 'workshop', 'Workshop & tool house', 9.3, 34.2, 3.6, 2.8, 0, 2, 2.0, [2.6, 5.0], [2.2, 3.6]),
   ],
   features: [
     F('dining', 'dining', 'Outdoor dining (terrace)', 11.9, 19.9, 2.6, 1.3, 0, 1),
     F('firepit', 'firepit', 'Fire pit clearing', 29.8, 9.2, 3.0, 3.0, 0, 5),
-    F('hammock', 'hammock', 'Hammock among birches', 15.6, 10.4, 3.6, 0.8, 18, 5),
+    F('hammock', 'hammock', 'Hammock among birches', 16.4, 10.8, 3.6, 0.8, 18, 5),
     F('meditation', 'meditation', 'Japanese meditation corner', 4.4, 31.6, 3.2, 3.2, 0, 5),
     F('tanks-house', 'tanks', 'Rain tanks (house roof) 2 × 1000 L', 10.8, 14.4, 1.2, 2.2, 0, 2),
     F('tanks-gh', 'tanks', 'Rain tank (greenhouse) 1000 L', 17.9, 32.6, 1.2, 1.2, 0, 5),
@@ -244,12 +246,13 @@ const C: Layout = {
     S('wellness', 'wellness', 'Gym & sauna pavilion', 20.6, 26.2, 5.4, 4.0, 0, 4, 3.0, [5.0, 8.0], [3.4, 5.0]),
     S('bania', 'bania', 'Bania (wood-fired tub) & deck', 27.4, 24.4, 3.6, 3.2, 0, 4, 1.0, [3.0, 5.2], [3.0, 4.4]),
     S('greenhouse', 'greenhouse', 'Greenhouse', 17.4, 32.0, 4.2, 2.8, 0, 5, 2.0, [3.0, 5.6], [2.4, 3.6]),
+    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 15.5, 5.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
     S('workshop', 'workshop', 'Workshop & tool house', 7.6, 34.6, 3.6, 2.8, 0, 2, 2.0, [2.6, 5.0], [2.2, 3.6]),
   ],
   features: [
     F('dining', 'dining', 'Outdoor dining (terrace)', 11.9, 19.9, 2.6, 1.3, 0, 1),
     F('firepit', 'firepit', 'Fire pit', 29.8, 9.0, 2.8, 2.8, 0, 5, false),
-    F('hammock', 'hammock', 'Hammock', 15.6, 10.4, 3.6, 0.8, 12, 5, true),
+    F('hammock', 'hammock', 'Hammock', 16.4, 10.8, 3.6, 0.8, 12, 5, true),
     F('meditation', 'meditation', 'Japanese meditation corner', 4.4, 30.4, 3.0, 3.0, 0, 5),
     F('tanks-house', 'tanks', 'Rain tanks (house roof) 3 × 1000 L', 10.8, 14.6, 1.2, 3.3, 0, 2),
     F('tanks-gh', 'tanks', 'Rain tank (greenhouse) 1000 L', 20.8, 32.4, 1.2, 1.2, 0, 5),
@@ -291,8 +294,8 @@ export const cloneLayout = (l: Layout): Layout => JSON.parse(JSON.stringify(l))
 /** Phases of the project. */
 export const PHASES = [
   { id: 0, name: 'Existing', short: 'Existing', desc: 'Existing house, tin garage and open pasture as surveyed.' },
-  { id: 1, name: 'House extension', short: 'Extension', desc: 'Planned extension behind the sleeping loft — a roofed garage for two cars — and the main timber terrace with pergola.' },
-  { id: 2, name: 'Landscape infrastructure', short: 'Infrastructure', desc: 'Fence, gates, entrance, drive, workshop, boardwalk, rain tanks, rain garden and hedge screening.' },
+  { id: 1, name: 'House extension', short: 'Extension', desc: 'Planned extension — the bedroom next to the bathroom (the loft above it grows with it) — and the main timber terrace with pergola.' },
+  { id: 2, name: 'Landscape infrastructure', short: 'Infrastructure', desc: 'Fence, gates, entrance, drive, 2-car carport, workshop, boardwalk, rain tanks, rain garden and hedge screening.' },
   { id: 3, name: 'Work', short: 'Work', desc: 'Micro office on the boardwalk.' },
   { id: 4, name: 'Wellness', short: 'Wellness', desc: 'Gym, sauna and the bania with its deck.' },
   { id: 5, name: 'Regenerative garden', short: 'Garden', desc: 'Greenhouse, edible landscape, native woodland and meadow, habitats.' },

@@ -158,7 +158,7 @@ export function CameraRig() {
     }
     if (bd < 0.65 && useStore.getState().phase >= 2) y = Math.max(y, by)
     if (x > 9.4 && x < 14.2 && z > 16.4 && z < 23.6 && useStore.getState().phase >= 1) y = Math.max(y, 3.06)
-    if (x > 5.3 && x < 9.3 && z > 12.8 && z < 23.3) y = Math.max(y, 3.1) + walk.current.lift // inside the house (floor 148.10 m, optional loft level)
+    if (x > 5.3 && x < 9.3 && z > 9.5 && z < 23.3) y = Math.max(y, 3.1) + walk.current.lift // inside the house (floor 148.10 m, optional loft level)
     return y + EYE
   }
 

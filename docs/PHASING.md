@@ -5,8 +5,8 @@ The phase strip (top-right of the viewport) and the *Phases* tab show the proper
 | Phase | Name | Appears |
 |---|---|---|
 | **0** | Existing | Existing house, existing tin garage, open pasture, surveyed terrain, boundary, neighbours, road |
-| **1** | House extension | Extension behind the loft end: roofed **garage for 2 cars** with drive from the gate; main terrace with black steel pergola and dining/lounge, tin garage removed |
-| **2** | Landscape infrastructure | Boundary fences (edge-specific), vehicle / pedestrian / service gates, bin store, entrance apron, **carport**, **workshop & tool house**, **continuous boardwalk**, stepping-stone path, rain tanks, rain garden, tool store, bicycle shelter, first hedge screens (road side, west) |
+| **1** | House extension | **Bedroom extension** next to the bathroom (loft above grows with it); main terrace with black steel pergola and dining/lounge, tin garage removed |
+| **2** | Landscape infrastructure | Boundary fences (edge-specific), vehicle / pedestrian / service gates, bin store, entrance apron, **2-car carport** with drive, **workshop & tool house**, **continuous boardwalk**, stepping-stone path, rain tanks, rain garden, tool store, bicycle shelter, first hedge screens (road side, west) |
 | **3** | Work | **Micro office** on the boardwalk |
 | **4** | Wellness | **Gym & sauna pavilion** with outdoor shower and deck, **bania** (wood-fired tub) with privacy screens |
 | **5** | Regenerative garden | **Greenhouse**, raised beds, compost, food forest, soft fruit, native woodland, meadow, wetland margin and pond, habitat features (deadwood, insect hotel, bird boxes), seating platform, fire pit, hammock |

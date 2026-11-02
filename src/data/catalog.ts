@@ -16,19 +16,19 @@ export const CATALOG: Record<string, CatalogEntry> = {
     phase: 0,
     status: 'existing',
     description:
-      'A compact gabled timber house, long axis north–south, ground-floor level 148.10 m a.s.l. (p.p.p. on the plan). The whole interior program fits in this body: sleeping loft and bathroom at the north end, stair, dining and living with stove at the south end. Black standing-seam roof, vertical timber cladding, dark-framed glazing, a sleeping loft over the bathroom and a high ceiling over the living space (see supplied section).',
+      'A compact gabled timber house, long axis north–south, ground-floor level 148.10 m a.s.l. (p.p.p. on the plan). Floor plan (supplied): entrance on the west wall next to the kitchen, bathroom (WC, vanity, shower) behind a partition, kitchen galley along its wall, round dining table, living room with corner sofa and wood stove facing the terrace; sleeping loft above the bathroom. Black standing-seam roof, vertical timber cladding, dark-framed glazing, a sleeping loft over the bathroom and a high ceiling over the living space (see supplied section).',
     materials: ['Black standing-seam steel roof, ~40° pitch', 'Vertical timber cladding: charred-look long walls, warm timber gables', 'Dark aluminium window frames, large sliding door to the terrace', 'Light timber and plaster interior, black steel stair/balustrade'],
     notes: ['Footprint ≈ 4.2 × 7.4 m measured from the plan hatch (±0.3 m).', 'Water Ø32 PE, sewer Ø160 PVC and electricity enter from the north (plan).', 'This object stays fixed in every masterplan option.'],
   },
   extension: {
-    title: 'Planned extension — garage for 2 cars',
-    subtitle: 'Phase 1 — behind the sleeping loft, facing the entrance drive',
+    title: 'Planned extension — bedroom + loft',
+    subtitle: 'Phase 1 — next to the bathroom, at the end opposite the living room',
     phase: 1,
     status: 'planned',
     description:
-      'The extension is added at the back of the house, behind the sleeping-loft end (north side, towards the road and the gate). It is a roofed, wide-span space of ≈ 5.8 × 5.5 m with a low black-roof gable, slatted timber wall on the west and a black steel portal on the drive side: room for two cars side by side, storage along the house wall, an EV charger and bike hooks. The drive from the gate (≈ 3.2 m, permeable pavers) leads straight into it.',
-    materials: ['Black standing-seam roof, 30° pitch, matching the house', 'Vertical timber slats on the west wall and north gable', 'Black powder-coated steel portal and posts', 'Permeable paver floor with concrete wheel strips'],
-    notes: ['Position (north end) and the 2-car size are design assumptions — please confirm against your extension drawings.', 'Water Ø32 and sewer Ø160 from the plan run through this area; they need to be re-routed or protected (verify).', 'Open sides, so it can be treated as a garage shelter / carport — check the rules with your municipality.'],
+      'A 3.3 m extension at the north end of the house, next to the bathroom (floor plan: bedroom with a double bed and a built-in wardrobe, door from the entrance hall). The sleeping loft above the bathroom continues over the bedroom, so the loft grows by the bedroom area. Same roof, cladding and window language; shown in slightly fresher timber so the two stages are readable.',
+    materials: ['Continuation of the existing roof (black standing seam, 40°) and vertical timber cladding', 'Sliding window-door to the garden and a window above the bed head', 'Oak floor, whitewashed timber ceiling'],
+    notes: ['Position (north end) follows the supplied floor plan, where the bedroom is on the side opposite the living room and terrace — please confirm.', 'Water Ø32 / sewer Ø160 on the plan enter near the north end of the house; check their routes before building.', 'Adds ≈ 14 m² to the built area. The development plan lists 70 m² for both dwellings — verify.'],
   },
   terrace: {
     title: 'Main terrace & pergola',
@@ -130,14 +130,13 @@ CATALOG.workshop = {
   notes: ['Starts at 3.6 × 2.8 m. Built early (Phase 2) so tools, mower and building materials have a dry home.', 'Needs 230 V + 400 V supply if a saw/planer is planned — verify capacity.', 'Keep fuel, paints and chainsaw in a ventilated cabinet; check distance rules for sheds ≤ 35 m².'],
 }
 CATALOG.carport = {
-  title: 'Carport — open garage shelter (wiata garażowa)',
-  subtitle: 'Phase 2 — on the entrance drive',
+  title: 'Carport for 2 cars (wiata garażowa)',
+  subtitle: 'Phase 2 — on the drive from the gate',
   phase: 2,
   status: 'proposed',
-  description:
-    'A light open carport beside the entrance gate: slender black steel posts, a low mono-pitch standing-seam roof draining to the back, a slatted timber back wall with storage and a wall charger. Roofs one car with room for bicycles and the bins behind the slats. Open to the apron so snow and rain stay off the car without a closed building.',
-  materials: ['Black powder-coated steel posts and beams', 'Standing-seam roof matching the house', 'Vertical timber slat back wall', 'Permeable paver / gravel base'],
-  notes: ['Sits on the plan\'s hard-standing (apron) — counted as roofed built area.', 'Open-sided carports are usually treated more leniently than a garage, but the rules differ per municipality — verify.', 'Roof water goes to a gutter on the back wall and can feed a rain tank.'],
+  description: 'An open carport ≈ 5.6 × 5.2 m for two cars side by side, on slender black steel posts with a low standing-seam roof draining to a slatted timber back wall with storage, wall charger and bike hooks. The drive from the vehicle gate (≈ 3.2 m, permeable pavers) leads straight into it.',
+  materials: ['Black powder-coated steel posts and beams', 'Standing-seam roof matching the house', 'Vertical timber slat back wall', 'Permeable paver floor with concrete wheel strips'],
+  notes: ['Counts as roofed built area (≈ 29 m²). Open carports are often treated more leniently than a garage, but rules differ per municipality — verify.', 'Roof water goes to a gutter on the back wall and can feed a rain tank.'],
 }
 
 export const FEATURE_NOTES: Record<string, { title: string; notes: string[] }> = {
