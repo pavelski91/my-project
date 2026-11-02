@@ -110,7 +110,7 @@ export function validateLayout(L: Layout, s: Settings, phase = 5): Issue[] {
     if (hit) issues.push({ id: `bw-${o.id}`, severity: 'warn', text: `Boardwalk runs through or hugs ${o.label}.`, ids: ['boardwalk', o.id] })
   }
   // utilities: warn if a pavilion sits on a planned service line
-  const lines = Object.values(UTILITIES)
+  const lines = s.releaseSecondDwelling ? [UTILITIES.waterLeft, UTILITIES.sewerLeft] : Object.values(UTILITIES)
   for (const st of structures) {
     const bad = lines.some((ln) => {
       for (let i = 0; i < ln.length - 1; i++) {
@@ -123,7 +123,7 @@ export function validateLayout(L: Layout, s: Settings, phase = 5): Issue[] {
   }
   void distToPolyline
   // entrance apron
-  for (const st of structures)
+  for (const st of structures.filter((q) => q.kind !== 'carport'))
     if (polyOverlap(rectCorners(st), rectCorners(apronRect()), 0) > 0) issues.push({ id: `ap-${st.id}`, severity: 'error', text: `${st.label} blocks the entrance apron.`, ids: [st.id] })
   return issues
 }

@@ -81,7 +81,7 @@ export const M = {
   rubber: std({ color: '#1c1c1c', roughness: 0.95 }),
   iron: std({ color: '#2d2f31', roughness: 0.6, metalness: 0.8 }),
   copper: std({ color: '#b87b52', roughness: 0.4, metalness: 0.9 }),
-  water: std({ color: '#35564f', roughness: 0.04, metalness: 0.1, transparent: true, opacity: 0.88, envMapIntensity: 1.5 }),
+  water: std({ color: '#3f8196', emissive: '#0d3a4a', emissiveIntensity: 0.55, roughness: 0.03, metalness: 0.0, transparent: true, opacity: 0.93, envMapIntensity: 1.8 }),
   tubWood: std({ color: '#b98a55', roughness: 0.75, map: lightBoards.map, bumpMap: lightBoards.bump, bumpScale: 1 }),
   lamp: std({ color: '#3d3a35', emissive: '#ffb25c', emissiveIntensity: 0, roughness: 0.6, metalness: 0.4 }),
   fire: std({ color: '#ff9a3c', emissive: '#ff7a1c', emissiveIntensity: 0, transparent: true, opacity: 0.0 }),

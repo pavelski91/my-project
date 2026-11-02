@@ -46,6 +46,9 @@ export const VIEWPOINTS = [
   { id: 'house-living', name: 'Inside the house — living room', pos: [8.4, 22.7] as V2, look: [7.0, 14.0] as V2, eyeY: 0 },
   { id: 'house-kitchen', name: 'Inside the house — kitchen & stair', pos: [7.6, 16.4] as V2, look: [7.2, 24.0] as V2, eyeY: 0 },
   { id: 'house-loft', name: 'Inside the house — sleeping loft', pos: [7.6, 15.9] as V2, look: [7.2, 13.2] as V2, eyeY: 2.35, pitch: -0.42 },
+  { id: 'workshop', name: 'At the workshop', pos: [0, 0] as V2, look: [0, 0] as V2 },
+  { id: 'carport', name: 'At the carport', pos: [0, 0] as V2, look: [0, 0] as V2 },
+  { id: 'pond', name: 'At the pond', pos: [0, 0] as V2, look: [0, 0] as V2, pitch: -0.36 },
   { id: 'meadow', name: 'In the meadow', pos: [14, 8.5] as V2, look: [24, 14] as V2 },
   { id: 'food', name: 'Food forest edge', pos: [30.6, 5.0] as V2, look: [26, 24] as V2 },
 ]
@@ -106,7 +109,7 @@ const defaultLayers: Layers = {
   interiors: false, lights: true, context: true, second: true,
 }
 const defaultSettings: Settings = {
-  releaseSecondDwelling: false, featureSetback: 1.0, growthYears: 9, northOffset: 0, quality: 'medium', boardwalkWidth: 1.2, precipMm: 600,
+  releaseSecondDwelling: true, featureSetback: 1.0, growthYears: 9, northOffset: 0, quality: 'medium', boardwalkWidth: 1.2, precipMm: 600,
 }
 
 let toastTimer: ReturnType<typeof setTimeout> | null = null

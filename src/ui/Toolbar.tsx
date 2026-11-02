@@ -145,7 +145,7 @@ export function TourBar() {
   const setCam = useStore((s) => s.setCam)
   const layout = useStore((s) => s.layout)
   if (cam !== 'tour') return null
-  const stops = ['House terrace', ...layout.structures.filter((s) => s.kind !== 'greenhouse').sort((a, b) => a.phase - b.phase).map((s) => s.label.split(' (')[0])]
+  const stops = ['House terrace', ...layout.structures.filter((s) => ['office', 'wellness', 'bania'].includes(s.kind)).sort((a, b) => a.phase - b.phase).map((s) => s.label.split(' (')[0])]
   const idx = Math.min(stops.length - 1, Math.floor(tour.t * stops.length))
   return (
     <div className="pointer-events-auto absolute left-1/2 top-3 z-20 w-[min(620px,calc(100%-24px))] -translate-x-1/2 rounded-xl border border-line bg-paper/95 p-3 shadow-lg backdrop-blur">

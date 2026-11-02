@@ -99,7 +99,7 @@ function BuildingsTab() {
     { id: 'extension', area: 4.2 * 3.3 },
     { id: 'terrace', area: 4.8 * 7.2 },
     ...(phase < 1 ? [{ id: 'shed', area: 3.4 * 4.6 }] : []),
-    { id: 'second', area: 4.3 * 7.4 },
+    ...(useStore.getState().settings.releaseSecondDwelling ? [] : [{ id: 'second', area: 4.3 * 7.4 }]),
   ]
   const Row = ({ id, label, area, sub, status, ph }: { id: string; label: string; area: number; sub: string; status: 'existing' | 'planned' | 'proposed'; ph: number }) => (
     <button

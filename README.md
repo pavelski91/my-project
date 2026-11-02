@@ -77,16 +77,19 @@ The **existing house** (Phase 0) and **planned extension** (+3.3 m south, Phase 
 
 ## The three options and the recommendation
 
+The second-dwelling land on the plan is **released** (you confirmed no second house will be built), so all three options use the whole parcel. Every option now also contains a **workshop & tool house** (≈ 10 m², barn doors, workbench, pegboard wall, firewood lean-to), an **open carport / garage shelter** by the entrance gate (≈ 18 m²) and a larger **garden pond** with a timber jetty.
+
 | | A — Forest Retreat | B — Japandi Courtyard | C — Regenerative Sanctuary |
 |---|---|---|---|
-| Idea | Pavilions hidden in woodland, long meandering boardwalk | Office, wellness and bania around one sheltered SW court | Smallest footprints, everything else is habitat, food and water |
-| Boardwalk | **34 m** | 17 m | 16 m |
+| Idea | Pavilions spread over the whole plot in woodland, one meandering boardwalk | Office, wellness and bania frame one sheltered court in the centre-east | Smallest footprints in one belt south of the house; north and east left to habitat and food |
+| Boardwalk | 24 m | 24 m | 15 m |
 | Office / wellness | 10.2 / 27.7 m² | 10.2 / 27.7 m² | 8.1 / 21.6 m² |
-| Biologically active | 81.1 % | 81.8 % | **83.7 %** |
-| Greenhouse sun (Dec / Mar / Jun) | 6.8 / 8.3 / 12.2 h | **5.8 / 9.8 / 14.6 h** | 5.3 / 9.4 / 13.5 h |
-| Weighted score (brief priorities) | **65** | 49 | 32 |
+| Built footprint | 130 m² | 130 m² | 119 m² |
+| Biologically active | 79.4 % | 80.1 % | **82.4 %** |
+| Greenhouse sun (Dec / Mar / Jun) | 6.8 / 8.7 / 14.4 h | 6.8 / **10.4** / 14.9 h | 6.8 / 10.3 / **15.3** h |
+| Weighted score (brief priorities) | 58 | **74** | 44 |
 
-**Recommended: Option A.** With the brief's priority order (house → boardwalk → office → gym/sauna → bania → greenhouse → biodiversity) it ranks first; with equal weights the order is the same (59 / 53 / 36), and only an ecology-first weighting makes C win. The margins between A and B are small — the in-app *Compare* panel lets you change the weights and see the ranking move. Numbers are model outputs (see below), not measurements.
+**Recommended: Option B.** It ranks first with the brief's priorities (74 vs 58 / 44) and with equal weights (70 / 50 / 53); only an ecology-first weighting makes C win (63). The in-app *Compare* panel lets you change the weights. Numbers are model outputs, not measurements. Note that built area (130 m²) is well above the plan's 70 m² — permit route to verify.
 
 ## Sustainability dashboard — how the numbers are made
 

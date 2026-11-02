@@ -203,14 +203,17 @@ function Pond({ f }: { f: Feature }) {
           c.setRGB(0.5, 0.7, 0.35)
         }}
       />
-      {[[-0.4, 0.2], [0.3, -0.3], [0.6, 0.35]].map(([x, z], i) => (
+      {[[-0.4, 0.2], [0.3, -0.3], [0.6, 0.35], [-0.7, -0.2], [0.0, 0.5], [0.45, 0.05], [-0.15, -0.55], [0.75, -0.25]].map(([x, z], i) => (
         <mesh key={i} position={[x * rx, y + 0.01, z * rz]} rotation={[-Math.PI / 2, 0, 0]}>
           <circleGeometry args={[0.16, 10]} />
           <meshStandardMaterial color="#4f7a3a" roughness={0.6} side={THREE.DoubleSide} />
         </mesh>
       ))}
-      {/* small timber dipping platform */}
-      <B at={[0, y + 0.18, rz + 0.55]} s={[1.0, 0.06, 0.8]} m={M.deck} />
+      {/* timber jetty with posts, a bench and stepping stones across the shallow end */}
+      <B at={[0, y + 0.2, rz + 0.5]} s={[1.7, 0.07, 1.2]} m={M.deck} />
+      {[-0.75, 0.75].map((x, i) => <B key={i} at={[x, y + 0.0, rz + 1.0]} s={[0.1, 0.5, 0.1]} m={M.steel} cast={false} />)}
+      <B at={[0, y + 0.45, rz + 1.0]} s={[1.5, 0.05, 0.28]} m={M.light} />
+      {[-0.9, -0.45, 0, 0.45, 0.9].map((k, i) => <Boulder key={'st' + i} at={[k * rx * 0.85, y + 0.02, -rz * 0.55 + (i % 2) * 0.12]} s={[0.26, 0.07, 0.22]} c="#9a978d" />)}
     </group>
   )
 }

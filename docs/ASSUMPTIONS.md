@@ -8,7 +8,7 @@
 | Existing house 4.2 × 7.4 m, extension +3.3 m south, eaves 2.9 m, roof 40° | `src/data/site.ts`, `src/scene/House.tsx` |
 | Setbacks: 3.0 m for habitable pavilions, 1.0 m for decks/features (a *guide* only) | Settings → *Feature setback*; layout `setback` fields |
 | Existing tin garage removed in Phase 1 | `src/lib/validate.ts` |
-| Right-hand dwelling footprint kept clear | Settings → *Use second-dwelling land* |
+| Right-hand dwelling will not be built — its land is released and used (you confirmed) | Settings → *Use second-dwelling land* (on by default) |
 | Annual rainfall 600 mm, runoff 0.9, first-flush/filter 0.9 | Sustain tab (editable rainfall) |
 | Timber decks and the boardwalk count as permeable (raised, open joints) | Dashboard footnote |
 | Native share counts only native woody plants; cultivars count as non-native | Dashboard |

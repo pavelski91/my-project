@@ -76,7 +76,7 @@ export function exclusions(c: GroundCtx): { rect: Rect; pad: number }[] {
   if (!c.releaseSecond) o.push({ rect: boxToRect(SECOND_DWELLING), pad: 1.4 })
   if (c.phase >= 1) o.push({ rect: boxToRect(HOUSE_EXTENSION), pad: 1.8 })
   for (const s of c.structs) o.push({ rect: s, pad: s.kind === 'bania' ? 1.0 : 1.5 })
-  for (const f of c.feats) if (f.kind !== 'habitat' && f.kind !== 'hammock' && f.kind !== 'dining') o.push({ rect: f, pad: f.kind === 'beds' ? 0.4 : 0.8 })
+  for (const f of c.feats) if (f.kind !== 'habitat' && f.kind !== 'hammock' && f.kind !== 'dining') o.push({ rect: f, pad: f.kind === 'beds' ? 0.4 : f.kind === 'pond' ? 2.6 : 0.8 })
   if (c.phase >= 2) {
     o.push({ rect: c.apron, pad: 0.8 })
     o.push({ rect: { x: ENTRANCE.waste.x, z: ENTRANCE.waste.z, w: ENTRANCE.waste.w, d: ENTRANCE.waste.d, rot: 0 }, pad: 0.8 })

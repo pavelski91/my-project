@@ -4,7 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera, OrthographicCamera } from '@react-three/drei'
 import type { OrbitControls as OrbitImpl } from 'three-stdlib'
 import { useStore, VIEWPOINTS } from '../store'
-import { PLOT_CENTER, terrainY, clamp, PLOT_BBOX } from '../lib/geometry'
+import { PLOT_CENTER, terrainY, clamp, PLOT_BBOX, rectCirclesPoint } from '../lib/geometry'
 import { useWalk } from './useWalk'
 import { PLOT } from '../data/site'
 import { pointInPoly } from '../lib/geometry'
@@ -51,15 +51,17 @@ export function CameraRig() {
       const vp = VIEWPOINTS.find((v) => v.id === viewpoint) ?? VIEWPOINTS[0]
       const w = walk.current
       let pos = vp.pos, look = vp.look
-      const st = layout.structures.find((q) => q.kind === vp.id)
+      const st: { x: number; z: number; w: number; d: number; rot: number } | undefined = layout.structures.find((q) => q.kind === vp.id) ?? layout.features.find((q) => q.kind === vp.id)
       if (st) {
         // stand in front of the pavilion on whichever side is inside the plot, looking at it
         const a = (st.rot * Math.PI) / 180
         const dirs: [number, number][] = [[-Math.sin(a), -Math.cos(a)], [Math.sin(a), Math.cos(a)], [Math.cos(a), -Math.sin(a)], [-Math.cos(a), Math.sin(a)]]
-        const dist = Math.max(st.w, st.d) / 2 + 7.5
+        if (vp.id === 'pond') dirs.unshift(dirs[3]) // look across the water from the west bank
+        const small = ['workshop', 'carport', 'pond'].includes(vp.id)
+        const dist = vp.id === 'pond' ? st.w / 2 + 1.6 : Math.max(st.w, st.d) / 2 + (small ? 4.6 : 7.5)
         for (const [ex, ez] of dirs) {
           const px = st.x + ex * dist, pz = st.z + ez * dist
-          if (pointInPoly(px, pz, PLOT) && Math.hypot(px - 7.3, pz - 17) > 5) { pos = [px, pz]; break }
+          if (pointInPoly(px, pz, PLOT) && Math.hypot(px - 7.3, pz - 17) > 5 && !layout.structures.some((q) => rectCirclesPoint(q, px, pz, 1.0)) && !layout.features.some((q) => q.enabled && q.kind !== 'habitat' && rectCirclesPoint(q, px, pz, 0.5))) { pos = [px, pz]; break }
         }
         look = [st.x, st.z]
       }
@@ -77,7 +79,7 @@ export function CameraRig() {
       t.done = new Set()
       // stations at the pavilions (nearest sample to each structure, in order along the path)
       const stops: number[] = []
-      for (const st of layout.structures.filter((q) => q.kind !== 'greenhouse')) {
+      for (const st of layout.structures.filter((q) => ['office', 'wellness', 'bania'].includes(q.kind))) {
         let best = 0, bd = Infinity
         samples.forEach((p, i) => {
           const d = Math.hypot(p.x - st.x, p.z - st.z)

@@ -20,11 +20,11 @@ export interface OptionResult {
 
 export function evaluateOption(id: 'A' | 'B' | 'C', years = 15): OptionResult {
   const layout = cloneLayout(LAYOUTS[id])
-  const veg = generateVegetation(layout, 5, false)
-  const m = computeMetrics(layout, 5, false, veg)
+  const veg = generateVegetation(layout, 5, true)
+  const m = computeMetrics(layout, 5, true, veg)
   const g = 0.12 + 0.88 * (1 - Math.exp(-years / 11))
-  const solar = greenhouseSolar(layout, 5, false, veg, g)
-  const issues = validateLayout(layout, { releaseSecondDwelling: false, featureSetback: 1 }, 5)
+  const solar = greenhouseSolar(layout, 5, true, veg, g)
+  const issues = validateLayout(layout, { releaseSecondDwelling: true, featureSetback: 1 }, 5)
   const bw = samplePath(layout.boardwalk, 0.5)
   // service-spine proxy: straight-line distance from the house terrace edge to every pavilion centre
   const service = layout.structures.reduce((a, s) => a + Math.hypot(s.x - 11, s.z - 20), 0)

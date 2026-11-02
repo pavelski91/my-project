@@ -7,6 +7,7 @@ import { Lighting } from './Lighting'
 import { Terrain, Boundary, Context } from './Terrain'
 import { House } from './House'
 import { Office, Wellness, Bania, Greenhouse } from './Pavilions'
+import { Workshop, Carport } from './Outbuildings'
 import { Features } from './Features'
 import { Boardwalk } from './Boardwalk'
 import { Fence } from './Fence'
@@ -27,6 +28,7 @@ function ApiBridge() {
   const { gl, scene, camera } = useThree()
   useEffect(() => {
     sceneApi.canvas = gl.domElement
+    ;(window as unknown as { __three: unknown }).__three = { scene, camera }
     sceneApi.screenshot = (scale = 1) => {
       const pr = gl.getPixelRatio()
       if (scale !== 1) gl.setPixelRatio(pr * scale)
@@ -50,6 +52,8 @@ function Structures() {
           case 'wellness': return <Wellness key={s.id} s={s} />
           case 'bania': return <Bania key={s.id} s={s} />
           case 'greenhouse': return <Greenhouse key={s.id} s={s} />
+          case 'workshop': return <Workshop key={s.id} s={s} />
+          case 'carport': return <Carport key={s.id} s={s} />
         }
       })}
     </>

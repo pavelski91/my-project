@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { Line } from '@react-three/drei'
 import { useStore, type Season } from '../store'
 import { PLOT, ENTRANCE, PLOT_LABELS, SECOND_DWELLING } from '../data/site'
-import { terrainY, rng, PLOT_CENTER, boxToRect, rectCorners, type V2 } from '../lib/geometry'
+import { terrainY, rng, PLOT_CENTER, boxToRect, rectCorners, smooth, type V2 } from '../lib/geometry'
 import { noise } from './materials'
 import { useSunState } from './env'
 import { B } from './prims'
@@ -14,32 +14,34 @@ import { Html } from '@react-three/drei'
 export const TERRAIN_SIZE = 150
 const HALF = TERRAIN_SIZE / 2
 export const TERRAIN_MIN: V2 = [PLOT_CENTER[0] - HALF, PLOT_CENTER[1] - HALF]
-const EDGE_Y = 1.2
+const EDGE_Y = -0.2
 
 const edgeTaper = (x: number, z: number) => {
   const d = Math.hypot(x - PLOT_CENTER[0], z - PLOT_CENTER[1])
   const t = Math.min(1, Math.max(0, (d - 52) / 20))
   return t * t * (3 - 2 * t)
 }
-interface Carve { x: number; z: number; rx: number; rz: number; rot: number; depth: number }
+interface Carve { x: number; z: number; rx: number; rz: number; rot: number; depth: number; level: number }
 let CARVES: Carve[] = []
-export const setCarves = (c: Carve[]) => { CARVES = c }
-const carveDepth = (x: number, z: number) => {
-  let d = 0
+export const setCarves = (c: Omit<Carve, 'level'>[]) => { CARVES = c.map((k) => ({ ...k, level: terrainY(k.x, k.z) })) }
+/** Pond / rain-garden basins: a level water edge at the centre height, a bowl below it, banks blended into the slope. */
+const withBasins = (x: number, z: number, base: number) => {
+  let h = base
   for (const c of CARVES) {
     const a = (-c.rot * Math.PI) / 180
     const dx = x - c.x, dz = z - c.z
     const lx = dx * Math.cos(a) + dz * Math.sin(a)
     const lz = -dx * Math.sin(a) + dz * Math.cos(a)
     const r = Math.hypot(lx / c.rx, lz / c.rz)
-    if (r < 1.5) {
-      const t = Math.min(1, Math.max(0, (r - 0.62) / 0.8))
-      d = Math.max(d, c.depth * (1 - t * t * (3 - 2 * t)))
+    if (r < 1.6) {
+      const w = 1 - smooth(0.95, 1.6, r)
+      const target = c.level - c.depth * smooth(1.0, 0.35, r)
+      h = h + (target - h) * w
     }
   }
-  return d
+  return h
 }
-export const groundY = (x: number, z: number) => terrainY(x, z) * (1 - edgeTaper(x, z)) + EDGE_Y * edgeTaper(x, z) - carveDepth(x, z)
+export const groundY = (x: number, z: number) => withBasins(x, z, terrainY(x, z) * (1 - edgeTaper(x, z)) + EDGE_Y * edgeTaper(x, z))
 
 const PAL: Record<Season, { grass: string; grass2: string; meadow: string; wood: string; field: string; field2: string; leafLitter: string }> = {
   spring: { grass: '#86a24b', grass2: '#97b05a', meadow: '#a3b25a', wood: '#6b7a45', field: '#7f9a3f', field2: '#6e8a39', leafLitter: '#7a6f48' },
@@ -307,6 +309,7 @@ export function Terrain() {
     canvasRef.current = c
     const t = new THREE.CanvasTexture(c)
     t.colorSpace = THREE.SRGBColorSpace
+    t.flipY = false // canvas row 0 = north edge = mesh z-min
     t.anisotropy = 16
     return t
   }, [quality])

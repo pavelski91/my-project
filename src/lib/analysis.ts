@@ -142,7 +142,7 @@ export function computeMetrics(layout: Layout, phase: number, releaseSecond: boo
 }
 
 /** Heights used for shading (m). */
-const STRUCT_H: Record<string, number> = { office: 3.1, wellness: 3.7, greenhouse: 2.7, bania: 1.9 }
+const STRUCT_H: Record<string, number> = { office: 3.1, wellness: 3.7, greenhouse: 2.7, bania: 1.9, workshop: 2.9, carport: 2.7 }
 
 export interface SolarResult {
   label: string

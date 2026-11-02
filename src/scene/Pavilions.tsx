@@ -26,7 +26,7 @@ export function useFloorY(s: Structure) {
   }, [samples, s.x, s.z, s.w, s.d, s.rot])
 }
 
-function Piles({ s, floor }: { s: Structure; floor: number }) {
+export function Piles({ s, floor }: { s: Structure; floor: number }) {
   const pts = useMemo(() => {
     const a: [number, number, number, number][] = []
     const nx = Math.max(2, Math.round(s.w / 2.2) + 1)
@@ -98,7 +98,7 @@ function Steam() {
 const ox = (x0: number, x1: number, y0: number, y1: number, extra: Partial<Opening> = {}): Opening => ({ x0, x1, y0, y1, ...extra })
 
 /** Trapezoid side wall for mono-pitch volumes: cladding outside, plaster inside. `side` = +1 east / -1 west. */
-function SideWall({ D, low, high, x, m, inner }: { D: number; low: number; high: number; x: number; m: THREE.Material; inner: THREE.Material }) {
+export function SideWall({ D, low, high, x, m, inner }: { D: number; low: number; high: number; x: number; m: THREE.Material; inner: THREE.Material }) {
   const side = x > 0 ? 1 : -1
   const mk = (depth: number, inset: number) => {
     const sh = new THREE.Shape()

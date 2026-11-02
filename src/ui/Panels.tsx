@@ -97,7 +97,7 @@ export function ComparePanel() {
                 {rs[best].id === 'A'
                   ? 'Forest Retreat best fits the brief: it gives the longest boardwalk journey, keeps full-size office and wellness pavilions and hides the buildings in planting. It trades some compactness (longer service runs) and a cooler office position for atmosphere and privacy.'
                   : rs[best].id === 'B'
-                    ? 'Japandi Courtyard gives the best greenhouse sun and water-to-food connection with a sheltered court, at the cost of a short boardwalk.'
+                    ? 'Japandi Courtyard uses the whole plot: three pavilions frame a sheltered court in the centre-east (the land the plan reserved for a second house), the greenhouse gets the best spring sun, and water runs downhill to the pond. It trades longer service runs for the strongest composition and the largest edible area.'
                     : 'Regenerative Sanctuary delivers the highest ecological performance but squeezes the pavilions below the sizes in the brief.'}
               </p>
               <p className="mt-2 text-[11.5px] leading-snug text-ink-2">Margins are small: with equal weights the order is the same, and only an ecology-first weighting turns C into the winner. The scores are relative (best = 100 % per criterion) — not absolute performance.</p>

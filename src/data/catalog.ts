@@ -119,6 +119,27 @@ export const CATALOG: Record<string, CatalogEntry> = {
   },
 }
 
+CATALOG.workshop = {
+  title: 'Workshop & tool house',
+  subtitle: 'Phase 2 — built first, used through the whole project',
+  phase: 2,
+  status: 'proposed',
+  description:
+    'A small mono-pitch timber workshop (≈ 10 m²) for garden tools and light carpentry: double barn doors on the entrance side, a window over a solid workbench with vise, a pegboard tool wall, shelves and a lean-to firewood store on the east gable. Insulated and wired so it can be used in winter; it also stores materials during the build.',
+  materials: ['Charred-look vertical timber cladding, black standing-seam roof', 'Timber barn doors on steel hinges', 'Birch-ply interior, oak workbench top', 'Open timber lean-to for firewood'],
+  notes: ['Starts at 3.6 × 2.8 m. Built early (Phase 2) so tools, mower and building materials have a dry home.', 'Needs 230 V + 400 V supply if a saw/planer is planned — verify capacity.', 'Keep fuel, paints and chainsaw in a ventilated cabinet; check distance rules for sheds ≤ 35 m².'],
+}
+CATALOG.carport = {
+  title: 'Carport — open garage shelter (wiata garażowa)',
+  subtitle: 'Phase 2 — on the entrance drive',
+  phase: 2,
+  status: 'proposed',
+  description:
+    'A light open carport beside the entrance gate: slender black steel posts, a low mono-pitch standing-seam roof draining to the back, a slatted timber back wall with storage and a wall charger. Roofs one car with room for bicycles and the bins behind the slats. Open to the apron so snow and rain stay off the car without a closed building.',
+  materials: ['Black powder-coated steel posts and beams', 'Standing-seam roof matching the house', 'Vertical timber slat back wall', 'Permeable paver / gravel base'],
+  notes: ['Sits on the plan\'s hard-standing (apron) — counted as roofed built area.', 'Open-sided carports are usually treated more leniently than a garage, but the rules differ per municipality — verify.', 'Roof water goes to a gutter on the back wall and can feed a rain tank.'],
+}
+
 export const FEATURE_NOTES: Record<string, { title: string; notes: string[] }> = {
   firepit: { title: 'Fire pit', notes: ['Stone ring with log seats under birch.', 'Keep 5 m from timber and trees; local open-fire rules apply.'] },
   hammock: { title: 'Hammock', notes: ['Two timber posts (or mature pines once established).'] },
