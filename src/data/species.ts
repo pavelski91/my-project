@@ -52,6 +52,12 @@ export const MEADOW_FLOWERS: { name: string; latin: string; color: string; bloom
   { name: 'Meadow sage', latin: 'Salvia pratensis', color: '#6a63c2', bloom: [5, 7] },
   { name: 'Red clover', latin: 'Trifolium pratense', color: '#cf6f9a', bloom: [5, 9] },
   { name: 'Wild carrot', latin: 'Daucus carota', color: '#f3f1e4', bloom: [6, 9] },
+  { name: 'Purple coneflower', latin: 'Echinacea purpurea', color: '#c9609a', bloom: [6, 9] },
+  { name: 'Woodland sage', latin: 'Salvia nemorosa', color: '#6a63c2', bloom: [6, 8] },
+  { name: 'Garden phlox', latin: 'Phlox paniculata', color: '#e8a0b4', bloom: [6, 9] },
+  { name: 'Ornamental onion', latin: 'Allium', color: '#9a7fbf', bloom: [5, 7] },
+  { name: 'Panicle hydrangea', latin: 'Hydrangea paniculata', color: '#f3ede0', bloom: [7, 10] },
+  { name: 'Stonecrop', latin: 'Hylotelephium', color: '#c97a9a', bloom: [8, 10] },
 ]
 
 export type ZoneMixEntry = [string, number]

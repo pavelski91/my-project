@@ -394,7 +394,7 @@ export function Vegetation() {
         deps={[flowers]}
         fill={(i, o, c) => {
           const f = flowers[i]
-          o.position.set(f.x, f.y + 0.5 + f.s * 0.3, f.z)
+          o.position.set(f.x, f.y + 0.45 + f.s * 0.35, f.z)
           o.scale.set(f.s * 1.2, f.s * 0.7, f.s * 1.2)
           c.set(MEADOW_FLOWERS[f.col].color)
         }}

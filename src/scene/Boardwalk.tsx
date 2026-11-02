@@ -32,7 +32,7 @@ export function Boardwalk() {
   const width = useStore((s) => s.layout.boardwalkWidth)
   const { samples, length } = useWalk()
   const pick = usePick('boardwalk')
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
 
   const data = useMemo(() => {
     const planks: { p: PathSample; slope: number }[] = []

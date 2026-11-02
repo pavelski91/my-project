@@ -116,7 +116,7 @@ export const useStore = create<State>((set, get) => ({
   camNonce: 0,
   viewpoint: 'terrace',
   season: 'summer',
-  hour: 15.5,
+  hour: 19.0,
   layers: defaultLayers,
   settings: defaultSettings,
   editMode: false,

@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import type { Structure } from '../data/layouts'
 import { useStore } from '../store'
 import { rectCorners, terrainY } from '../lib/geometry'
 import { B, Cyl, Wall, Glazing, Gable, GableRoof, MonoRoof, type Opening } from './prims'
-import { M, flatMat } from './materials'
+import { M, flatMat, steamTexture } from './materials'
 import { usePick, useSunState } from './env'
 import { useWalk } from './useWalk'
 
@@ -55,6 +56,45 @@ function Piles({ s, floor }: { s: Structure; floor: number }) {
 }
 
 const plantGeo = new THREE.IcosahedronGeometry(1, 1)
+/** Row of terracotta pots with perennials along a deck edge (local coordinates). */
+function Pots({ xs, z, y = 0 }: { xs: number[]; z: number; y?: number }) {
+  return (
+    <>
+      {xs.map((x, i) => (
+        <group key={i} position={[x, y, z]}>
+          <Cyl at={[0, 0.17, 0]} r={0.17} h={0.34} m={M.pot} seg={10} />
+          <mesh position={[0, 0.52, 0]} scale={[0.27, 0.3 + (i % 3) * 0.06, 0.27]} geometry={plantGeo} material={M.green} castShadow />
+          {i % 2 === 0 && <mesh position={[0.05, 0.78, 0]} scale={[0.09, 0.06, 0.09]} geometry={plantGeo} material={M.fabricMustard} />}
+        </group>
+      ))}
+    </>
+  )
+}
+
+/** Rising steam above the bathing tub. */
+function Steam() {
+  const refs = useRef<(THREE.Sprite | null)[]>([])
+  useFrame(({ clock }) => {
+    refs.current.forEach((s, i) => {
+      if (!s) return
+      const t = (clock.elapsedTime * 0.22 + i / 8) % 1
+      s.position.set(Math.sin(i * 2.1 + t * 3) * 0.3, t * 1.9, Math.cos(i * 3.3 + t * 2) * 0.3)
+      const k = 0.55 + t * 1.2
+      s.scale.set(k, k, 1)
+      ;(s.material as THREE.SpriteMaterial).opacity = 0.42 * Math.sin(Math.PI * t)
+    })
+  })
+  return (
+    <group position={[0, 1.0, 0]}>
+      {Array.from({ length: 8 }, (_, i) => (
+        <sprite key={i} ref={(el) => { refs.current[i] = el }}>
+          <spriteMaterial map={steamTexture} transparent depthWrite={false} color="#ffffff" opacity={0.3} />
+        </sprite>
+      ))}
+    </group>
+  )
+}
+
 const ox = (x0: number, x1: number, y0: number, y1: number, extra: Partial<Opening> = {}): Opening => ({ x0, x1, y0, y1, ...extra })
 
 /** Trapezoid side wall for mono-pitch volumes: cladding outside, plaster inside. `side` = +1 east / -1 west. */
@@ -86,7 +126,7 @@ export function Office({ s }: { s: Structure }) {
   const floor = useFloorY(s)
   const pick = usePick(s.id)
   const interiors = useStore((st) => st.layers.interiors)
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
   const w = s.w, d = s.d
   const low = 2.4, high = 3.05
   const front: Opening[] = [ox(-w / 2 + 0.45, w / 2 - 0.45, 0.4, 2.6, { mullions: 1 })]
@@ -129,6 +169,10 @@ export function Office({ s }: { s: Structure }) {
       </mesh>
       <Cyl at={[-0.8, 0.28, d / 2 - 0.5]} r={0.16} h={0.4} m={M.pot} seg={10} />
       <Cyl at={[-0.8, 0.7, d / 2 - 0.5]} r={0.24} h={0.5} m={M.green} seg={8} cast={false} />
+      {/* view-side deck with pots */}
+      <B at={[0, -0.02, d / 2 + 0.95]} s={[w + 0.7, 0.1, 1.6]} m={M.deck} />
+      {[-w / 2 - 0.2, w / 2 + 0.2].map((x, i) => <B key={'dp' + i} at={[x, -0.25, d / 2 + 1.6]} s={[0.1, 0.4, 0.1]} m={M.steel} cast={false} />)}
+      <Pots xs={[-w / 2 + 0.1, w / 2 - 0.1]} z={d / 2 + 1.55} />
       {/* entrance landing + lamp */}
       <B at={[0.8, 0.0, -d / 2 - 0.5]} s={[1.3, 0.1, 0.9]} m={M.deck} />
       <B at={[1.45, 2.15, -d / 2 - 0.08]} s={[0.1, 0.26, 0.1]} m={M.lamp} cast={false} />
@@ -144,7 +188,7 @@ export function Wellness({ s }: { s: Structure }) {
   const floor = useFloorY(s)
   const pick = usePick(s.id)
   const interiors = useStore((st) => st.layers.interiors)
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
   const w = s.w, d = s.d
   const eave = 2.55
   const pitch = (24 * Math.PI) / 180
@@ -212,6 +256,11 @@ export function Wellness({ s }: { s: Structure }) {
       <B at={[-w / 2 + 0.05, 1.2, 0.0]} s={[0.04, 1.8, 1.6]} m={M.glass} cast={false} />
       <Cyl at={[-w / 2 + 1.7, 0.12, 0.6]} r={0.09} h={0.7} m={M.fabricSage} rot={[0, 0, Math.PI / 2]} seg={10} />
       <B at={[-w / 2 + 1.0, 0.12, 0.7]} s={[0.6, 0.04, 1.7]} m={M.fabricSage} cast={false} />
+      {/* south deck along the glazing, with pots and lanterns */}
+      <B at={[0, -0.02, d / 2 + 0.85]} s={[w + 0.3, 0.1, 1.5]} m={M.deck} />
+      <B at={[0, -0.27, d / 2 + 0.85]} s={[w, 0.4, 1.4]} m={M.steel} cast={false} />
+      <Pots xs={[-w / 2 + 0.3, -w / 2 + 2.2, 0.8, w / 2 - 0.9]} z={d / 2 + 1.45} />
+      {[-w / 2 + 1.4, w / 2 - 1.5].map((x, i) => <B key={'ln' + i} at={[x, 0.2, d / 2 + 0.5]} s={[0.16, 0.34, 0.16]} m={M.lamp} cast={false} />)}
       {/* exterior: east relaxation deck + outdoor shower + lounger */}
       <group position={[w / 2 + 1.6, 0, 0]}>
         <B at={[0, 0.0, 0]} s={[3.2, 0.12, d]} m={M.deck} />
@@ -235,7 +284,7 @@ export function Wellness({ s }: { s: Structure }) {
 export function Bania({ s }: { s: Structure }) {
   const floor = useFloorY(s)
   const pick = usePick(s.id)
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
   const w = s.w, d = s.d
   const tubR = Math.min(0.98, Math.min(w, d) / 2 - 0.55)
   const tx = w / 2 - tubR - 0.55
@@ -255,6 +304,7 @@ export function Bania({ s }: { s: Structure }) {
           <circleGeometry args={[tubR - 0.04, 36]} />
         </mesh>
         <mesh position={[0, 0.94, 0]} material={M.fire} />
+        <Steam />
         <B at={[-tubR - 0.28, 0.45, 0]} s={[0.4, 0.9, 0.4]} m={M.steel} />
         <Cyl at={[-tubR - 0.28, 1.9, 0]} r={0.06} h={2.1} m={M.steelLight} seg={10} />
         <Cyl at={[-tubR - 0.28, 2.98, 0]} r={0.1} h={0.1} m={M.steel} seg={10} />
@@ -288,7 +338,7 @@ export function Bania({ s }: { s: Structure }) {
 /* ------------------------------------------------------------ GREENHOUSE */
 export function Greenhouse({ s }: { s: Structure }) {
   const pick = usePick(s.id)
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
   const w = s.w, d = s.d
   const g = terrainY(s.x, s.z)
   const wallH = 1.9

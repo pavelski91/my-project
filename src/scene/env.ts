@@ -16,7 +16,9 @@ export function useSunState() {
     const dir = sunDir(sun, north)
     const sinAlt = Math.sin(sun.alt)
     const day01 = smooth(-0.1, 0.12, sinAlt) // 0 = night, 1 = day
-    return { sun, dir, sinAlt, day: day01, night: 1 - day01, snow: season === 'winter' ? 1 : 0, season, leafy: season === 'summer' || season === 'spring' || season === 'autumn' }
+    const lowSun = smooth(0.42, 0.0, Math.max(sinAlt, 0)) // 1 near the horizon (golden hour)
+    const glow = Math.max(1 - day01, day01 * lowSun * 0.85) // warm windows & lamps from golden hour on
+    return { sun, dir, sinAlt, day: day01, night: 1 - day01, glow, lowSun, snow: season === 'winter' ? 1 : 0, season, leafy: season === 'summer' || season === 'spring' || season === 'autumn' }
   }, [season, hour, north])
 }
 

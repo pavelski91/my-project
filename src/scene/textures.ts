@@ -103,7 +103,7 @@ export function makeBoards(o: BoardOpts) {
       for (let k = 0; k < 210; k++) {
         const cx = x + r() * bw
         const cy = r() * S
-        g.strokeStyle = rgb(0, 0, 0, 0.1 + r() * 0.35)
+        g.strokeStyle = rgb(0, 0, 0, 0.04 + r() * 0.18)
         g.lineWidth = 0.7 + r() * 1.1
         g.beginPath()
         g.moveTo(cx - bw * 0.1, cy)

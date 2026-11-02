@@ -153,6 +153,38 @@ export function generateVegetation(layout: Layout, phase: number, releaseSecond:
     if (meadow && r() < 0.55) flowers.push({ x: x + (r() - 0.5) * 0.3, y, z: z + (r() - 0.5) * 0.3, s: 0.7 + r() * 0.6, rot: r() * 6.283, col: Math.floor(r() * 9), phase: ph })
   }
 
+  // Perennial borders: drifts of garden perennials hugging the pavilions, house and boardwalk (like a cottage-garden edge)
+  const gr = rng(hashStr('border' + layout.id))
+  const gf = () => 9 + Math.floor(gr() * 6) // garden flower indices (see MEADOW_FLOWERS)
+  const clump = (x: number, z: number, ph: number) => {
+    if (!insidePlot(x, z) || distToPolyEdge(x, z, PLOT) < 0.7 || blocked(x, z, false, 0.2)) return false
+    const y = terrainY(x, z)
+    const main = gf()
+    const n = 5 + Math.floor(gr() * 6)
+    for (let i = 0; i < n; i++) flowers.push({ x: x + (gr() - 0.5) * 0.8, y, z: z + (gr() - 0.5) * 0.8, s: 0.55 + gr() * 0.4, rot: 0, col: gr() < 0.7 ? main : gf(), phase: ph })
+    for (let i = 0; i < 3; i++) tufts.push({ x: x + (gr() - 0.5) * 0.9, y, z: z + (gr() - 0.5) * 0.9, s: 1.0 + gr() * 0.5, rot: gr() * 6.28, c: gr(), phase: ph, meadow: true })
+    return true
+  }
+  const around = (cx: number, cz: number, w: number, d: number, rot: number, ph: number, want: number) => {
+    const a = (rot * Math.PI) / 180
+    const c = Math.cos(a), s = Math.sin(a)
+    let placed = 0
+    for (let t = 0; t < want * 8 && placed < want; t++) {
+      const lx = (gr() - 0.5) * (w + 5), lz = (gr() - 0.5) * (d + 5)
+      const ax = Math.abs(lx) - w / 2, az = Math.abs(lz) - d / 2
+      if (Math.max(ax, az) < 1.0 || Math.max(ax, az) > 2.3) continue
+      if (clump(cx + lx * c + lz * s, cz - lx * s + lz * c, ph)) placed++
+    }
+  }
+  for (const st of layout.structures) around(st.x, st.z, st.w, st.d, st.rot, st.phase, st.kind === 'bania' ? 10 : 20)
+  around(7.3, 18.05, 4.2, 10.7, 0, 1, 26)
+  for (let i = 0; i < ctx.bw.length; i += 4) {
+    const p = ctx.bw[i]
+    const side = gr() < 0.5 ? -1 : 1
+    const off = ctx.bwWidth / 2 + 0.55 + gr() * 0.9
+    clump(p.x + -p.tz * side * off, p.z + p.tx * side * off, 2)
+  }
+
   // Context: far trees, hedgerows & neighbours' growth (not counted in the dashboard)
   const cr = rng(hashStr('context'))
   const context: Plant[] = []

@@ -119,6 +119,7 @@ export function Toolbar() {
       </div>
       <div className="mt-1.5 flex flex-wrap items-center gap-1.5 border-t border-line pt-1.5">
         <Btn active={night} onClick={() => useStore.getState().setNight(!night)} title="Toggle day / night">{night ? '☾ Night' : '☀ Day'}</Btn>
+        <Btn onClick={() => useStore.getState().setHour(19.0)} title="Warm low sun, lit windows">Golden hour</Btn>
         <div className="flex items-center gap-2 px-1">
           <input type="range" min={4} max={22} step={0.25} value={hour} onChange={(e) => setHour(parseFloat(e.target.value))} className="w-[96px]" aria-label="Solar time" />
           <span className="w-[74px] text-[11.5px] tabular-nums text-ink-2">{String(hh).padStart(2, '0')}:{String(mm).padStart(2, '0')} · {alt > 0 ? `${alt.toFixed(0)}°` : 'below'}</span>

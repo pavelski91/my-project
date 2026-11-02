@@ -3,12 +3,12 @@ import { makeBoards, makeNoise, makeSeamRoof, makeStone, makeTuft, makeRake, mak
 
 const std = (p: THREE.MeshStandardMaterialParameters) => new THREE.MeshStandardMaterial(p)
 
-const charred = makeBoards({ base: '#3b2d24', boards: 8, vary: 0.2, gap: 3, char: true, vertical: true, seed: 3 })
+const charred = makeBoards({ base: '#6d4a34', boards: 8, vary: 0.2, gap: 3, char: true, vertical: true, seed: 3 })
 const larchWarm = makeBoards({ base: '#a67647', boards: 8, vary: 0.2, gap: 3, vertical: true, seed: 8 })
 const larchNew = makeBoards({ base: '#7a5638', boards: 8, vary: 0.16, gap: 3, vertical: true, seed: 13 })
 const lightBoards = makeBoards({ base: '#d2b389', boards: 8, vary: 0.14, gap: 2, vertical: true, seed: 5 })
-const deckBoards = makeBoards({ base: '#7d6a55', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 17 })
-const walkBoards = makeBoards({ base: '#5b4a3b', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 19 })
+const deckBoards = makeBoards({ base: '#a9855a', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 17 })
+const walkBoards = makeBoards({ base: '#a47c52', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 19 })
 const saunaBoards = makeBoards({ base: '#d9a468', boards: 10, vary: 0.12, gap: 2, vertical: false, seed: 23 })
 const roof = makeSeamRoof()
 export const noise = makeNoise(256, 9, 1.3)
@@ -16,6 +16,20 @@ export const noiseSoft = makeNoise(256, 4, 0.8)
 const stoneTex = makeStone('#807d76', 4)
 const slateTex = makeStone('#585a58', 6)
 
+export const steamTexture = (() => {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const g = c.getContext('2d')!
+  const grd = g.createRadialGradient(64, 64, 4, 64, 64, 62)
+  grd.addColorStop(0, 'rgba(255,255,255,0.9)')
+  grd.addColorStop(0.5, 'rgba(255,255,255,0.35)')
+  grd.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = grd
+  g.fillRect(0, 0, 128, 128)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+})()
 export const tuftTexture = makeTuft()
 export const rakeTexture = makeRake()
 export const waterTexture = makeWater()

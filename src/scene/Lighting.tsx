@@ -13,7 +13,7 @@ const SKY_NIGHT = new THREE.Color('#0b1220')
 
 /** Sun/moon, sky, fog, seasonal and night material updates. */
 export function Lighting() {
-  const { dir, sun, day, night, snow, season } = useSunState()
+  const { dir, sun, day, night, snow, season, glow } = useSunState()
   const quality = useStore((s) => s.settings.quality)
   const { scene } = useThree()
   const light = useRef<THREE.DirectionalLight>(null)
@@ -25,7 +25,7 @@ export function Lighting() {
 
   const alt = sun.alt
   const lowSun = THREE.MathUtils.smoothstep(0.45 - Math.sin(Math.max(alt, 0)), 0, 0.45) // 1 when near horizon
-  const sunColor = useMemo(() => new THREE.Color('#fff4e0').lerp(new THREE.Color('#ffb072'), lowSun), [lowSun])
+  const sunColor = useMemo(() => new THREE.Color('#fff4e0').lerp(new THREE.Color('#ff9d52'), lowSun), [lowSun])
   const fogColor = useMemo(() => {
     const c = SKY_DAY.clone().lerp(SKY_DUSK, lowSun * day * 0.65)
     return c.lerp(SKY_NIGHT, night)
@@ -45,9 +45,9 @@ export function Lighting() {
 
   // material updates that depend on season / night
   useEffect(() => {
-    M.glass.emissiveIntensity = night * 0.65
-    M.glassDark.emissiveIntensity = night * 0.5
-    M.lamp.emissiveIntensity = night * 2.6
+    M.glass.emissiveIntensity = glow * 0.7
+    M.glassDark.emissiveIntensity = glow * 0.55
+    M.lamp.emissiveIntensity = glow * 2.8
     const snowCol = new THREE.Color('#eef3f4')
     for (const m of [M.roof, M.roofSlope]) {
       m.color.set('#ffffff').lerp(snowCol, snow * 0.35)
@@ -56,20 +56,20 @@ export function Lighting() {
     M.walk.color.set('#ffffff').lerp(snowCol, snow * 0.4)
     M.mulch.color.set('#5a4230').lerp(new THREE.Color('#d4dadc'), snow * 0.7)
     M.concrete.color.set('#8d8b86').lerp(snowCol, snow * 0.4)
-  }, [night, snow])
+  }, [night, snow, glow])
 
   const shadowSize = quality === 'high' ? 4096 : 2048
   return (
     <>
       <Sky distance={4500} sunPosition={dir.clone().multiplyScalar(1000).toArray() as [number, number, number]} turbidity={season === 'winter' ? 6 : 4} rayleigh={lerp(0.6, 2.4, lowSun) * (night > 0.7 ? 0.1 : 1)} mieCoefficient={0.004} mieDirectionalG={0.8} />
       {night > 0.4 && <Stars radius={600} depth={60} count={3500} factor={5} saturation={0} fade speed={0.3} />}
-      <hemisphereLight args={[night > 0.5 ? '#2b3a58' : '#cfe0ee', night > 0.5 ? '#14170f' : '#6d6a46', lerp(0.28, 0.65, day) + night * 0.42]} />
+      <hemisphereLight args={[night > 0.5 ? '#2b3a58' : lowSun > 0.4 ? '#e9d3c0' : '#cfe0ee', night > 0.5 ? '#14170f' : lowSun > 0.4 ? '#8a7048' : '#6d6a46', lerp(0.28, 0.7, day) + night * 0.42]} />
       <directionalLight
         ref={light}
         castShadow
         position={[PLOT_CENTER[0] + lp.x, lp.y, PLOT_CENTER[1] + lp.z]}
         target={target}
-        intensity={day * 3.4 * (0.35 + 0.65 * (1 - lowSun * 0.45)) + night * 1.1}
+        intensity={day * 3.6 * (0.45 + 0.55 * (1 - lowSun * 0.3)) + night * 1.1}
         color={night > 0.5 ? '#9db4e6' : sunColor}
         shadow-mapSize={[shadowSize, shadowSize]}
         shadow-bias={-0.00025}

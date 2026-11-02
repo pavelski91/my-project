@@ -18,7 +18,7 @@ function Boulder({ at, s, c = '#8a8780' }: { at: [number, number, number]; s: [n
 }
 
 function FirePit({ f }: { f: Feature }) {
-  const { night } = useSunState()
+  const { glow: night } = useSunState()
   const stones = useMemo(() => Array.from({ length: 12 }, (_, i) => (i / 12) * Math.PI * 2), [])
   return (
     <group>
