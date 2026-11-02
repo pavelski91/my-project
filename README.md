@@ -18,7 +18,11 @@ More: [plan](docs/screenshots/s03-plan.png) · [night](docs/screenshots/s06-nigh
 
 ---
 
-## Run it
+## Open it without installing anything
+
+Download **`standalone/narewka-japandi-sanctuary.html`** (one self-contained file, ~1.7 MB) and double-click it — it opens in Chrome / Edge / Firefox. No Node, no install, no internet needed. Regenerate it with `npm run build:single`.
+
+## Run it (development)
 
 ```bash
 npm install
