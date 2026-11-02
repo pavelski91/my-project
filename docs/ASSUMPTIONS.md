@@ -5,7 +5,7 @@
 |---|---|
 | Survey sheet is north-up | Settings → *Sheet bearing from true north* |
 | Boundary scale 0.0649 m/px (calibrated to 1418 m²) | `src/data/site.ts` |
-| Existing house 4.2 × 7.4 m with the whole interior inside it; extension = bedroom 3.3 m at the north end next to the bathroom, loft continues over it; 2-car carport ≈ 5.6 × 5.2 m by the drive — eaves 2.9 m, roof 40° | `src/data/site.ts`, `src/scene/House.tsx` |
+| Existing house 4.2 × 7.4 m with the whole interior inside it; extension = bedroom 3.3 m at the north end next to the bathroom, loft continues over it; 2-car carport ≈ 5.6 × 5.2 m far east of the house, on the drive — eaves 2.9 m, roof 40° | `src/data/site.ts`, `src/scene/House.tsx` |
 | Setbacks: 3.0 m for habitable pavilions, 1.0 m for decks/features (a *guide* only) | Settings → *Feature setback*; layout `setback` fields |
 | Existing tin garage removed in Phase 1 | `src/lib/validate.ts` |
 | Right-hand dwelling will not be built — its land is released and used (you confirmed) | Settings → *Use second-dwelling land* (on by default) |

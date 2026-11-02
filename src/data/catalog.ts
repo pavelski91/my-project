@@ -21,12 +21,12 @@ export const CATALOG: Record<string, CatalogEntry> = {
     notes: ['Footprint ≈ 4.2 × 7.4 m measured from the plan hatch (±0.3 m).', 'Water Ø32 PE, sewer Ø160 PVC and electricity enter from the north (plan).', 'This object stays fixed in every masterplan option.'],
   },
   extension: {
-    title: 'Planned extension — bedroom + loft',
-    subtitle: 'Phase 1 — next to the bathroom, at the end opposite the living room',
+    title: 'Planned extension — bedroom, reading nook & 2nd bedroom',
+    subtitle: 'Phase 1 — bedroom below; reading nook + 2nd bedroom in the loft above',
     phase: 1,
     status: 'planned',
     description:
-      'A 3.3 m extension at the north end of the house, next to the bathroom (floor plan: bedroom with a double bed and a built-in wardrobe, door from the entrance hall). The sleeping loft above the bathroom continues over the bedroom, so the loft grows by the bedroom area. Same roof, cladding and window language; shown in slightly fresher timber so the two stages are readable.',
+      'A 3.3 m extension at the north end of the house, next to the bathroom (floor plan: bedroom with a double bed and a built-in wardrobe, door from the entrance hall). Downstairs: bedroom. Upstairs: the loft above the bathroom becomes a reading nook and continues over the bedroom as a second bedroom. Same roof, cladding and window language; shown in slightly fresher timber so the two stages are readable.',
     materials: ['Continuation of the existing roof (black standing seam, 40°) and vertical timber cladding', 'Sliding window-door to the garden and a window above the bed head', 'Oak floor, whitewashed timber ceiling'],
     notes: ['Position (north end) follows the supplied floor plan, where the bedroom is on the side opposite the living room and terrace — please confirm.', 'Water Ø32 / sewer Ø160 on the plan enter near the north end of the house; check their routes before building.', 'Adds ≈ 14 m² to the built area. The development plan lists 70 m² for both dwellings — verify.'],
   },
@@ -131,10 +131,10 @@ CATALOG.workshop = {
 }
 CATALOG.carport = {
   title: 'Carport for 2 cars (wiata garażowa)',
-  subtitle: 'Phase 2 — on the drive from the gate',
+  subtitle: 'Phase 2 — far east of the plot, on a drive from the gate',
   phase: 2,
   status: 'proposed',
-  description: 'An open carport ≈ 5.6 × 5.2 m for two cars side by side, on slender black steel posts with a low standing-seam roof draining to a slatted timber back wall with storage, wall charger and bike hooks. The drive from the vehicle gate (≈ 3.2 m, permeable pavers) leads straight into it.',
+  description: 'An open carport ≈ 5.6 × 5.2 m for two cars side by side, on slender black steel posts with a low standing-seam roof draining to a slatted timber back wall with storage, wall charger and bike hooks. It stands apart from the house in the east of the plot; a ≈ 3.2 m permeable-paver drive leads from the vehicle gate straight into it.',
   materials: ['Black powder-coated steel posts and beams', 'Standing-seam roof matching the house', 'Vertical timber slat back wall', 'Permeable paver floor with concrete wheel strips'],
   notes: ['Counts as roofed built area (≈ 29 m²). Open carports are often treated more leniently than a garage, but rules differ per municipality — verify.', 'Roof water goes to a gutter on the back wall and can feed a rain tank.'],
 }

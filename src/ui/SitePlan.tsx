@@ -75,7 +75,7 @@ export function SitePlanSVG({ svgRef }: { svgRef?: React.RefObject<SVGSVGElement
   const push = (label: string, sub: string, r: Rect, fill: string, kind: string, stroke?: string) => items.push({ n: n++, label, sub, r, fill, stroke, kind })
   push('Existing house', `${(HOUSE_EXISTING.x1 - HOUSE_EXISTING.x0).toFixed(1)} × ${(HOUSE_EXISTING.z1 - HOUSE_EXISTING.z0).toFixed(1)} m · floor 148.10`, boxToRect(HOUSE_EXISTING), '#3b3f40', 'house')
   if (phase >= 1) {
-    push('Planned extension — bedroom + loft', '+3.3 m next to the bathroom, Phase 1', boxToRect(HOUSE_EXTENSION), '#6b5440', 'ext')
+    push('Planned extension — bedroom (+ loft above)', '+3.3 m next to the bathroom, Phase 1', boxToRect(HOUSE_EXTENSION), '#6b5440', 'ext')
     push('Terrace & pergola', 'Phase 1', boxToRect(TERRACE), '#b49a78', 'deck')
   } else push('Existing tin garage', 'g1 · removed in Phase 1', boxToRect(SHED_EXISTING), '#9aa4a6', 'shed')
   layout.structures.filter((s) => s.phase <= phase).forEach((s) => push(s.label, `${s.w.toFixed(1)} × ${s.d.toFixed(1)} m = ${(s.w * s.d).toFixed(1)} m² · Phase ${s.phase}`, s, s.kind === 'bania' ? '#b49a78' : s.kind === 'greenhouse' ? '#cfe0d6' : s.kind === 'workshop' ? '#7a6a55' : s.kind === 'carport' ? '#a9a9a0' : '#3b3f40', s.kind))

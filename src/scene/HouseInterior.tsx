@@ -33,15 +33,21 @@ export function HouseInterior() {
       {/* floor: wide-plank oak */}
       <Bi at={[0, 0.03, 0]} s={[3.66, 0.06, 7.1]} m={M.oak} />
 
-      {/* ---------- LOFT over the bathroom (continues over the bedroom in the extension) ---------- */}
+      {/* ---------- LOFT over the bathroom: reading nook (continues as the 2nd bedroom over the extension) ---------- */}
       <Bi at={[0, LOFT_Y - 0.1, -2.375]} s={[3.66, 0.2, 2.35]} m={M.oak} cast />
       <Bi at={[0, LOFT_Y - 0.22, -2.375]} s={[3.66, 0.04, 2.35]} m={M.plaster} />
-      <Bi at={[-0.5, LOFT_Y + 0.02, -2.2]} s={[2.0, 0.02, 1.7]} m={M.rug} />
-      <Bi at={[-0.5, LOFT_Y + 0.2, -2.9]} s={[1.5, 0.36, 0.6]} m={M.fabricGrey} />
-      <Bi at={[-0.5, LOFT_Y + 0.5, -3.2]} s={[1.5, 0.3, 0.12]} m={M.fabricGrey} />
-      <Bi at={[-0.1, LOFT_Y + 0.42, -2.9]} s={[0.36, 0.3, 0.12]} m={M.fabricMustard} rot={[0.3, 0.2, 0]} />
-      <Bi at={[1.45, LOFT_Y + 0.5, -2.7]} s={[0.5, 1.0, 1.6]} m={M.light} />
-      <Plant at={[1.5, LOFT_Y + 1.0, -2.0]} h={0.5} pot={0.12} />
+      {/* reading nook: rug, deep armchair, floor lamp, low table and a wall of books */}
+      <Bi at={[-0.2, LOFT_Y + 0.02, -2.4]} s={[2.2, 0.02, 1.6]} m={M.rug} />
+      <Bi at={[0.7, LOFT_Y + 0.24, -2.6]} s={[0.9, 0.44, 0.85]} m={M.fabricSage} cast />
+      <Bi at={[0.7, LOFT_Y + 0.62, -2.98]} s={[0.9, 0.5, 0.14]} m={M.fabricSage} rot={[-0.12, 0, 0]} />
+      <Bi at={[0.62, LOFT_Y + 0.55, -2.45]} s={[0.4, 0.3, 0.1]} m={M.fabricMustard} rot={[0.4, 0.3, 0]} />
+      <Cyl at={[-0.35, LOFT_Y + 0.2, -2.3]} r={0.28} h={0.4} m={M.tubWood} seg={20} cast />
+      <Bi at={[-0.35, LOFT_Y + 0.43, -2.3]} s={[0.26, 0.05, 0.19]} m={M.fabricLinen} />
+      <Cyl at={[1.5, LOFT_Y + 0.8, -2.1]} r={0.012} h={1.6} m={M.steel} seg={6} cast={false} />
+      <mesh position={[1.5, LOFT_Y + 1.55, -2.1]} scale={[0.16, 0.14, 0.16]} geometry={ball} material={M.paper} />
+      <Bi at={[-1.6, LOFT_Y + 0.9, -2.5]} s={[0.3, 1.8, 2.0]} m={M.light} />
+      {Array.from({ length: 12 }, (_, i) => <Bi key={i} at={[-1.43, LOFT_Y + 0.55 + (i % 4) * 0.4, -3.2 + Math.floor(i / 4) * 0.62]} s={[0.12, 0.3, 0.45]} m={[M.fabricMustard, M.fabricGrey, M.fabricSage, M.fabricLinen][i % 4]} />)}
+      <Plant at={[1.55, LOFT_Y, -3.2]} h={0.7} pot={0.14} />
       {balust.map((x, i) => <Bi key={i} at={[x, LOFT_Y + 0.5, -1.22]} s={[0.025, 1.0, 0.025]} m={M.steel} />)}
       <Bi at={[-0.8, LOFT_Y + 1.0, -1.22]} s={[1.95, 0.04, 0.06]} m={M.steel} />
       <Bi at={[-0.8, LOFT_Y + 0.04, -1.22]} s={[1.95, 0.04, 0.06]} m={M.steel} />

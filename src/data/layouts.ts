@@ -92,7 +92,7 @@ const Z = (id: string, type: ZoneType, label: string, poly: V2[], phase = 5): Zo
 
 /* The whole parcel is available: the plan's second dwelling footprint (x 25–30, z 17–24) is free land. */
 
-const STONE_PATH: V2[] = P(10.4, 5.4, 6.2, 6.8, 3.4, 9.0, 3.2, 13.6, 4.3, 15.0, 4.9, 15.2)
+const STONE_PATH: V2[] = P(22.0, 3.4, 16.0, 5.2, 10.4, 5.8, 6.2, 6.9, 3.4, 9.0, 3.2, 13.6, 4.3, 15.0, 4.9, 15.2)
 const NE_SCREEN: V2[] = P(0.6, -0.2, 15.2, -1.6, 15.2, 2.2, 0.6, 2.2)
 
 /* ------------------------------------------------------------------ */
@@ -119,12 +119,12 @@ const B: Layout = {
     S('wellness', 'wellness', 'Gym & sauna pavilion', 21.3, 22.4, 6.6, 4.2, -90, 4, 3.0, [5.4, 8.0], [3.6, 5.0]),
     S('bania', 'bania', 'Bania (wood-fired tub) & deck', 30.4, 22.8, 3.8, 3.4, 0, 4, 1.0, [3.2, 5.2], [3.0, 4.4]),
     S('greenhouse', 'greenhouse', 'Greenhouse', 26.2, 28.5, 4.4, 3.0, 0, 5, 2.0, [3.0, 5.6], [2.4, 3.6]),
-    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 15.5, 5.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
+    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 33.2, 4.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
     S('workshop', 'workshop', 'Workshop & tool house', 9.6, 34.0, 3.6, 2.8, 0, 2, 2.0, [2.6, 5.0], [2.2, 3.6]),
   ],
   features: [
     F('dining', 'dining', 'Outdoor dining (terrace)', 11.9, 19.9, 2.6, 1.3, 0, 1),
-    F('firepit', 'firepit', 'Fire pit under birches', 29.8, 8.4, 3.0, 3.0, 0, 5),
+    F('firepit', 'firepit', 'Fire pit under birches', 27.6, 10.6, 3.0, 3.0, 0, 5),
     F('hammock', 'hammock', 'Hammock between pines', 16.4, 10.8, 3.6, 0.8, 18, 5),
     F('meditation', 'meditation', 'Japanese meditation corner', 4.6, 31.6, 3.2, 3.2, 0, 5),
     F('tanks-house', 'tanks', 'Rain tanks (house roof) 2 × 1000 L', 10.8, 14.4, 1.2, 2.2, 0, 2),
@@ -135,7 +135,7 @@ const B: Layout = {
     F('raingarden', 'raingarden', 'Rain garden', 31.4, 27.2, 2.6, 1.8, 0, 2),
     F('beds', 'beds', 'Raised vegetable beds', 19.2, 29.0, 3.0, 1.8, 0, 5),
     F('habitat-1', 'habitat', 'Deadwood & insect habitat', 2.6, 4.4, 2.4, 1.6, 20, 5),
-    F('habitat-2', 'habitat', 'Log pile & bee hotel', 34.0, 8.0, 2.0, 1.4, -10, 5),
+    F('habitat-2', 'habitat', 'Log pile & bee hotel', 35.0, 9.6, 2.0, 1.4, -10, 5),
     F('platform', 'platform', 'Woodland seating platform', 21.8, 8.6, 2.0, 2.0, 0, 5),
   ],
   boardwalk: P(14.2, 20.2, 17.8, 18.8, 21.8, 17.9, 25.4, 17.7, 27.4, 18.9, 25.9, 21.4, 25.0, 23.6, 27.0, 24.8, 28.9, 23.4),
@@ -192,7 +192,7 @@ const A: Layout = {
   ],
   features: [
     F('dining', 'dining', 'Outdoor dining (terrace)', 11.9, 19.9, 2.6, 1.3, 0, 1),
-    F('firepit', 'firepit', 'Fire pit clearing', 29.8, 9.2, 3.0, 3.0, 0, 5),
+    F('firepit', 'firepit', 'Fire pit clearing', 27.6, 10.6, 3.0, 3.0, 0, 5),
     F('hammock', 'hammock', 'Hammock among birches', 16.4, 10.8, 3.6, 0.8, 18, 5),
     F('meditation', 'meditation', 'Japanese meditation corner', 4.4, 31.6, 3.2, 3.2, 0, 5),
     F('tanks-house', 'tanks', 'Rain tanks (house roof) 2 × 1000 L', 10.8, 14.4, 1.2, 2.2, 0, 2),
@@ -203,7 +203,7 @@ const A: Layout = {
     F('raingarden', 'raingarden', 'Rain garden', 24.4, 27.0, 2.6, 1.8, 0, 2),
     F('beds', 'beds', 'Raised vegetable beds', 20.2, 30.4, 3.0, 1.8, 0, 5),
     F('habitat-1', 'habitat', 'Deadwood & insect habitat', 2.6, 4.2, 2.4, 1.6, 20, 5),
-    F('habitat-2', 'habitat', 'Log pile & bee hotel', 34.0, 8.0, 2.0, 1.4, -10, 5),
+    F('habitat-2', 'habitat', 'Log pile & bee hotel', 35.0, 9.6, 2.0, 1.4, -10, 5),
     F('platform', 'platform', 'Woodland seating platform', 24.5, 8.6, 2.0, 2.0, 0, 5),
   ],
   boardwalk: P(14.2, 20.2, 16.2, 18.9, 19.6, 18.3, 22.8, 18.5, 25.8, 18.9, 28.7, 19.1, 31.8, 20.7, 33.0, 23.5, 31.2, 25.3),
@@ -262,7 +262,7 @@ const C: Layout = {
     F('raingarden', 'raingarden', 'Rain garden (swale)', 22.2, 29.8, 3.0, 1.8, 0, 2),
     F('beds', 'beds', 'Raised vegetable beds', 13.2, 30.8, 3.0, 1.8, 0, 5),
     F('habitat-1', 'habitat', 'Deadwood & insect habitat', 2.6, 4.2, 2.4, 1.6, 20, 5),
-    F('habitat-2', 'habitat', 'Log pile & bee hotel', 34.0, 8.0, 2.0, 1.4, -10, 5),
+    F('habitat-2', 'habitat', 'Log pile & bee hotel', 35.0, 9.6, 2.0, 1.4, -10, 5),
     F('habitat-3', 'habitat', 'Hibernaculum & stone pile', 24.0, 15.0, 2.0, 1.4, 5, 5),
     F('platform', 'platform', 'Woodland seating platform', 21.0, 8.6, 2.0, 2.0, 0, 5),
   ],

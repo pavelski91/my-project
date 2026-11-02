@@ -109,7 +109,7 @@ export const ENTRANCE = {
   apron: { x0: 20.0, x1: 29.2, depth: 5.5 }, // paved hardstand (proposal within the plan's 98 m² paved allowance)
   waste: { x: 31.8, z: -1.5, w: 2.4, d: 1.4 },
   /** drive from the vehicle gate to the garage (permeable pavers / gravel), centre line + width */
-  drive: { pts: [[24.0, -0.8], [22.6, 3.2], [21.0, 4.8], [18.6, 5.6]] as [number, number][], width: 3.2 },
+  drive: { pts: [[24.0, -0.8], [25.6, 2.0], [28.0, 3.9], [30.3, 4.7]] as [number, number][], width: 3.2 },
 }
 
 export const SITE_FACTS = {
