@@ -140,7 +140,7 @@ export function GableRoof({
               position={[(sgn * run) / 2, midY - 0.1, zc]}
               rotation={[0, 0, -sgn * pitch]}
               geometry={boxGeo(slopeLen - 0.1, 0.03, len - 0.1)}
-              material={M.light}
+              material={M.whitewash}
               receiveShadow
             />
           )}
@@ -191,7 +191,7 @@ export function MonoRoof({
         position={[0, (yBack + yFront) / 2 - 0.07, (zBack + zFront) / 2]}
         rotation={[-ang, 0, 0]}
         geometry={boxGeo(W + 2 * ov - 0.1, 0.03, len - 0.1)}
-        material={M.light}
+        material={M.whitewash}
         receiveShadow
       />
     </group>

@@ -37,12 +37,15 @@ export const SEASON_DATE: Record<Season, { month: number; day: number }> = {
 }
 
 export const VIEWPOINTS = [
-  { id: 'terrace', name: 'On the terrace', pos: [12.0, 17.4] as V2, look: [22, 29] as V2 },
+  { id: 'terrace', name: 'On the terrace', pos: [12.0, 17.4] as V2, look: [22, 29] as V2, eyeY: undefined as number | undefined },
   { id: 'gate', name: 'At the entrance gate', pos: [23.5, -4.4] as V2, look: [14, 14] as V2 },
   { id: 'office', name: 'At the micro office', pos: [0, 0] as V2, look: [0, 0] as V2 },
   { id: 'wellness', name: 'At the gym & sauna', pos: [0, 0] as V2, look: [0, 0] as V2 },
   { id: 'bania', name: 'At the bania', pos: [0, 0] as V2, look: [0, 0] as V2 },
   { id: 'greenhouse', name: 'At the greenhouse', pos: [0, 0] as V2, look: [0, 0] as V2 },
+  { id: 'house-living', name: 'Inside the house — living room', pos: [8.4, 22.7] as V2, look: [7.0, 14.0] as V2, eyeY: 0 },
+  { id: 'house-kitchen', name: 'Inside the house — kitchen & stair', pos: [7.6, 16.4] as V2, look: [7.2, 24.0] as V2, eyeY: 0 },
+  { id: 'house-loft', name: 'Inside the house — sleeping loft', pos: [7.6, 15.9] as V2, look: [7.2, 13.2] as V2, eyeY: 2.35, pitch: -0.42 },
   { id: 'meadow', name: 'In the meadow', pos: [14, 8.5] as V2, look: [24, 14] as V2 },
   { id: 'food', name: 'Food forest edge', pos: [30.6, 5.0] as V2, look: [26, 24] as V2 },
 ]

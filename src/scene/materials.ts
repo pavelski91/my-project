@@ -10,6 +10,8 @@ const lightBoards = makeBoards({ base: '#d2b389', boards: 8, vary: 0.14, gap: 2,
 const deckBoards = makeBoards({ base: '#a9855a', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 17 })
 const walkBoards = makeBoards({ base: '#a47c52', boards: 7, vary: 0.2, gap: 4, vertical: false, seed: 19 })
 const saunaBoards = makeBoards({ base: '#d9a468', boards: 10, vary: 0.12, gap: 2, vertical: false, seed: 23 })
+const oakFloor = makeBoards({ base: '#e6d2ae', boards: 6, vary: 0.1, gap: 2, vertical: false, seed: 41 })
+const whiteBoards = makeBoards({ base: '#f1e9d8', boards: 8, vary: 0.05, gap: 2, vertical: true, seed: 61 })
 const roof = makeSeamRoof()
 export const noise = makeNoise(256, 9, 1.3)
 export const noiseSoft = makeNoise(256, 4, 0.8)
@@ -55,6 +57,12 @@ export const M = {
   sauna: withBump(saunaBoards, { roughness: 0.7 }),
   roof: std({ map: roof.map, bumpMap: roof.bump, bumpScale: 1.5, roughness: 0.42, metalness: 0.6, color: '#ffffff' }),
   roofSlope: std({ map: rotTex(roof.map), bumpMap: rotTex(roof.bump), bumpScale: 1.5, roughness: 0.42, metalness: 0.6, color: '#ffffff' }),
+  whitewash: withBump(whiteBoards, { roughness: 0.85 }),
+  oak: withBump(oakFloor, { roughness: 0.6 }),
+  counter: std({ color: '#2b2d2e', roughness: 0.5, metalness: 0.1 }),
+  ceramic: std({ color: '#efece4', roughness: 0.3 }),
+  rug: std({ color: '#cdbb94', roughness: 1, bumpMap: noise, bumpScale: 2 }),
+  paper: std({ color: '#f4e7c9', emissive: '#ffcf8a', emissiveIntensity: 0.2, roughness: 0.9 }),
   steel: std({ color: '#1d1f21', roughness: 0.42, metalness: 0.75 }),
   steelLight: std({ color: '#8b9094', roughness: 0.3, metalness: 0.9 }),
   glass: std({ color: '#a9c1cf', roughness: 0.04, metalness: 0.0, transparent: true, opacity: 0.2, envMapIntensity: 1.4, side: THREE.DoubleSide, depthWrite: false, emissive: '#ffb86b', emissiveIntensity: 0 }),

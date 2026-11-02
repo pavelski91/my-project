@@ -6,6 +6,7 @@ import { terrainY, TERRACE_DECK_Y } from '../lib/geometry'
 import { B, Cyl, Wall, Glazing, Gable, GableRoof, type Opening } from './prims'
 import { M, flatMat } from './materials'
 import { usePick, useSunState } from './env'
+import { HouseInterior } from './HouseInterior'
 
 const W = 4.2
 const T = 0.3
@@ -46,70 +47,6 @@ function EndWall({ z, ops, mat, gableMat, withGable = true, face }: { z: number;
       {withGable && (
         <Gable W={W} R={(W / 2) * Math.tan(PITCH)} D={0.12} m={gableMat} at={[0, EAVE, face > 0 ? -0.03 : -0.09]} />
       )}
-    </group>
-  )
-}
-
-function Interior({ ext, y0 }: { ext: boolean; y0: number }) {
-  // local z: north -5.35 .. south +5.35 (existing 7.4 + extension 3.3 = 10.7), group is centred on the whole house
-  const L = ext ? 10.7 : 7.4
-  const zN = -L / 2
-  const loftY = 2.32
-  return (
-    <group>
-      {/* floor */}
-      <B at={[0, 0.03, 0]} s={[W - 0.3, 0.06, L - 0.2]} m={M.light} cast={false} />
-      {/* loft at north end */}
-      <B at={[0, loftY, zN + 1.55]} s={[W - 0.34, 0.18, 3.0]} m={M.light} />
-      <B at={[0.3, loftY + 0.32, zN + 1.0]} s={[1.6, 0.34, 1.95]} m={M.fabricLinen} />
-      <B at={[0.3, loftY + 0.5, zN + 0.95]} s={[1.5, 0.08, 1.8]} m={M.fabricGrey} />
-      <B at={[0.3, loftY + 0.56, zN + 1.6]} s={[1.5, 0.08, 0.6]} m={M.fabricMustard} />
-      {/* slat balustrade */}
-      {Array.from({ length: 14 }, (_, i) => (
-        <B key={i} at={[-1.75 + i * 0.27, loftY + 0.6, zN + 3.08]} s={[0.04, 0.95, 0.04]} m={M.steel} cast={false} />
-      ))}
-      <B at={[0, loftY + 1.08, zN + 3.08]} s={[W - 0.5, 0.04, 0.05]} m={M.steel} cast={false} />
-      {/* bathroom core under loft */}
-      <B at={[-0.1, 1.2, zN + 3.15]} s={[3.2, 2.4, 0.1]} m={M.plasterDark} />
-      <B at={[0.35, 0.45, zN + 1.5]} s={[0.4, 0.4, 0.5]} m={M.plaster} />
-      <B at={[0.7, 0.9, zN + 2.6]} s={[0.55, 0.12, 0.4]} m={M.plaster} />
-      {/* stair along west wall, rising north */}
-      {Array.from({ length: 11 }, (_, i) => (
-        <B key={i} at={[-1.55, 0.1 + i * 0.205, zN + 6.0 - i * 0.2 - 1.2]} s={[0.8, 0.07, 0.4]} m={M.light} />
-      ))}
-      {/* kitchen run */}
-      <B at={[-1.55, 0.45, zN + 6.45]} s={[0.62, 0.9, 2.0]} m={M.plasterDark} />
-      <B at={[-1.55, 0.92, zN + 6.45]} s={[0.66, 0.04, 2.04]} m={M.light} cast={false} />
-      <B at={[-1.8, 1.9, zN + 6.5]} s={[0.35, 0.7, 1.4]} m={M.plasterDark} />
-      {/* dining */}
-      <Cyl at={[0.35, 0.72, zN + 7.4]} r={0.5} h={0.04} m={M.light} />
-      <Cyl at={[0.35, 0.36, zN + 7.4]} r={0.05} h={0.72} m={M.steel} />
-      {[0, 1, 2].map((i) => (
-        <B key={i} at={[0.35 + Math.cos(i * 2.1) * 0.78, 0.25, zN + 7.4 + Math.sin(i * 2.1) * 0.78]} s={[0.4, 0.5, 0.4]} m={M.light} />
-      ))}
-      {ext && (
-        <group>
-          {/* living: L-shaped sofa + low table */}
-          <B at={[-0.2, 0.22, zN + 9.6]} s={[2.3, 0.44, 0.9]} m={M.fabricGrey} />
-          <B at={[-0.2, 0.55, zN + 10.0]} s={[2.3, 0.35, 0.2]} m={M.fabricGrey} />
-          <B at={[-1.2, 0.22, zN + 8.9]} s={[0.9, 0.44, 1.3]} m={M.fabricGrey} />
-          <B at={[-0.4, 0.55, zN + 9.55]} s={[0.4, 0.22, 0.14]} m={M.fabricMustard} />
-          <Cyl at={[0.1, 0.18, zN + 8.9]} r={0.38} h={0.36} m={M.light} />
-          {/* wood stove + flue */}
-          <B at={[1.45, 0.45, zN + 10.05]} s={[0.5, 0.9, 0.5]} m={M.steel} />
-          <Cyl at={[1.45, 3.1, zN + 10.05]} r={0.07} h={4.2} m={M.steel} />
-        </group>
-      )}
-      {/* plant on loft */}
-      <Cyl at={[-1.2, loftY + 1.4, zN + 3.0]} r={0.22} h={0.5} m={M.green} seg={8} />
-      {/* ceiling pendant track */}
-      <B at={[0, 3.7, 0]} s={[0.05, 0.05, L - 1.2]} m={M.steel} cast={false} />
-      {[-2.4, 0.4, 2.8].map((z, i) => (
-        <mesh key={i} position={[0, 3.55, z]} material={M.lamp}>
-          <sphereGeometry args={[0.1, 10, 8]} />
-        </mesh>
-      ))}
-      <group position={[0, y0 * 0, 0]} />
     </group>
   )
 }
@@ -203,13 +140,13 @@ export function House() {
 
   const eastEx: Opening[] = [
     o(-3.0, -1.4, 0.9, 2.3, { mullions: 1 }),
-    o(-0.6, -0.05, 0.5, 2.55),
+    o(-0.9, 0.0, 0, 2.2, { door: true }), // entrance door from the stepping-stone path
     o(1.0, 3.5, 0, 2.4, { mullions: 1, door: true }),
   ]
-  const westEx: Opening[] = [o(-2.4, -1.4, 1.5, 2.4), o(1.1, 2.6, 1.0, 1.95)]
+  const westEx: Opening[] = [o(-2.4, -1.4, 1.5, 2.4)]
   const eastExt: Opening[] = [o(-1.3, 1.3, 0.5, 2.4, { mullions: 2 })]
-  const westExt: Opening[] = [o(-0.4, 1.0, 1.0, 2.2)]
-  const northOps: Opening[] = [ox(-0.45, 0.45, 1.9, 2.6)]
+  const westExt: Opening[] = [o(-1.2, -0.1, 1.0, 1.95), o(0.3, 1.5, 1.0, 2.1)] // kitchen sink window + living window
+  const northOps: Opening[] = [ox(-0.7, 0.7, 2.5, 2.86)] // clerestory above the sleeping loft
   const southOps: Opening[] = [ox(-1.5, 1.5, 0.15, 2.7, { mullions: 2 })]
 
   // house group for the whole footprint: local z origin at centre of full extension scheme
@@ -223,7 +160,9 @@ export function House() {
         <LongWall side={-1} len={Lx} ops={westEx} mat={M.charred} y0={y0} />
         <EndWall z={-Lx / 2} ops={northOps} mat={M.larchWarm} gableMat={M.larchWarm} face={-1} />
         {!extOn && <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />}
-        <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[0.3, extOn ? 0 : 0.3]} />
+        <group visible={!interiors}>
+          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[0.3, extOn ? 0 : 0.3]} />
+        </group>
         {/* skylight */}
         <group position={[-0.95, EAVE + 0.55, 0.4]} rotation={[0, 0, PITCH]}>
           <B at={[0, 0.06, 0]} s={[0.8, 0.06, 0.9]} m={M.steel} cast={false} />
@@ -235,11 +174,8 @@ export function House() {
         {[1.0, 3.6].map((z, i) => (
           <B key={i} at={[W / 2 + 0.09, 1.9, z]} s={[0.1, 0.28, 0.1]} m={i ? M.lamp : M.lamp} cast={false} />
         ))}
-        {!interiors && <group />}
-        <group visible={!interiors || true}>{extOn ? null : <Interior ext={false} y0={y0} />}</group>
         {/* drainage: downpipes to the rain tanks */}
         <Cyl at={[W / 2 + 0.06, 1.45, -Lx / 2 + 0.2]} r={0.045} h={2.9} m={M.steel} seg={8} />
-        {night > 0.2 && <pointLight position={[0, 2.2, 0]} intensity={4.5 * night} distance={9} color="#ffb870" decay={1.6} />}
       </group>
 
       {extOn && (
@@ -249,18 +185,23 @@ export function House() {
           <LongWall side={1} len={Lext} ops={eastExt} mat={charredNew} y0={y0} />
           <LongWall side={-1} len={Lext} ops={westExt} mat={charredNew} y0={y0} />
           <EndWall z={Lext / 2} ops={southOps} mat={M.larchNew} gableMat={M.larchNew} face={1} />
-          <GableRoof W={W} L={Lext} eave={EAVE} pitch={PITCH} endOv={[0, 0.35]} />
+          <group visible={!interiors}>
+            <GableRoof W={W} L={Lext} eave={EAVE} pitch={PITCH} endOv={[0, 0.35]} />
+          </group>
+          {/* stove flue through the west roof slope */}
+          <Cyl at={[-1.35, 3.85, 0.95]} r={0.08} h={2.6} m={M.steel} seg={10} />
+          <Cyl at={[-1.35, 5.2, 0.95]} r={0.12} h={0.12} m={M.steel} seg={10} />
           <B at={[W / 2 + 0.09, 1.9, -1.4]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
           <B at={[W / 2 + 0.09, 1.9, 1.4]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
-          <pointLight position={[0, 2.0, 0]} intensity={3.2 * night} distance={7} color="#ffb870" decay={1.6} />
         </group>
       )}
-      {/* interior of the finished (phase ≥ 1) house, positioned about the full length */}
-      {extOn && (
-        <group position={[x, y0, (e.z0 + HOUSE_EXTENSION.z1) / 2]}>
-          <Interior ext y0={y0} />
-        </group>
-      )}
+      {/* interior: Japandi with sleeping loft — spans the finished house (existing 7.4 m + extension 3.3 m) */}
+      <group position={[x, y0, (e.z0 + HOUSE_EXTENSION.z1) / 2]}>
+        <HouseInterior ext={extOn} />
+        <pointLight position={[0, 2.3, -3.2]} intensity={4 + 6 * night} distance={8} color="#ffc98a" decay={1.6} />
+        <pointLight position={[0, 3.0, 1.0]} intensity={5 + 6 * night} distance={10} color="#ffd8a8" decay={1.6} />
+        {extOn && <pointLight position={[0, 2.4, 4.2]} intensity={4 + 5 * night} distance={8} color="#ffd8a8" decay={1.6} />}
+      </group>
       {extOn && <Terrace onPick={pickTerrace} />}
       {!extOn && <ExistingShed onPick={pickShed} />}
     </group>

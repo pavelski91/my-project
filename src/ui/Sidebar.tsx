@@ -276,7 +276,7 @@ export function Sidebar() {
   return (
     <aside className="flex h-full w-[312px] shrink-0 flex-col border-r border-line bg-paper">
       <div className="border-b border-line px-4 pb-3 pt-4">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-sage-d">Narewka · działka 420</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-sage-d">Narewka · Mickiewicza 1 · dz. 420</div>
         <h1 className="mt-1 font-serif text-[21px] leading-[1.15]">Japandi Forest Sanctuary</h1>
         <p className="mt-1 text-[12px] italic text-ink-2">Japanese simplicity meets the wild landscape of Podlasie.</p>
       </div>

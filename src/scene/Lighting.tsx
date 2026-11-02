@@ -48,6 +48,7 @@ export function Lighting() {
     M.glass.emissiveIntensity = glow * 0.7
     M.glassDark.emissiveIntensity = glow * 0.55
     M.lamp.emissiveIntensity = glow * 2.8
+    M.paper.emissiveIntensity = 0.25 + glow * 1.4
     const snowCol = new THREE.Color('#eef3f4')
     for (const m of [M.roof, M.roofSlope]) {
       m.color.set('#ffffff').lerp(snowCol, snow * 0.35)

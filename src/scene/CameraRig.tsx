@@ -24,7 +24,7 @@ export function CameraRig() {
   const controls = useRef<OrbitImpl>(null)
   const goal = useRef<{ pos: THREE.Vector3; target: THREE.Vector3; zoom: number } | null>(null)
   const ortho = cam === 'iso' || cam === 'plan'
-  const walk = useRef({ yaw: 0, pitch: -0.05, x: 0, z: 0, keys: new Set<string>(), drag: false, lx: 0, ly: 0 })
+  const walk = useRef({ yaw: 0, pitch: -0.05, x: 0, z: 0, keys: new Set<string>(), drag: false, lx: 0, ly: 0, lift: 0 })
   const { samples, length } = useWalk()
   const tourRef = useRef({ s: 0, hold: 0, stops: [] as number[], done: new Set<number>(), tick: 0 })
   const tour = useStore((s) => s.tour)
@@ -63,10 +63,11 @@ export function CameraRig() {
         }
         look = [st.x, st.z]
       }
+      w.lift = (vp as { eyeY?: number }).eyeY ?? 0
       w.x = pos[0]
       w.z = pos[1]
       w.yaw = Math.atan2(-(look[0] - pos[0]), -(look[1] - pos[1]))
-      w.pitch = -0.04
+      w.pitch = (vp as { pitch?: number }).pitch ?? -0.04
       goal.current = null
     } else if (cam === 'tour') {
       goal.current = null
@@ -155,6 +156,7 @@ export function CameraRig() {
     }
     if (bd < 0.65 && useStore.getState().phase >= 2) y = Math.max(y, by)
     if (x > 9.4 && x < 14.2 && z > 16.4 && z < 23.6 && useStore.getState().phase >= 1) y = Math.max(y, 3.06)
+    if (x > 5.3 && x < 9.3 && z > 12.8 && z < 23.3) y = Math.max(y, 3.1) + walk.current.lift // inside the house (floor 148.10 m, optional loft level)
     return y + EYE
   }
 
@@ -293,8 +295,6 @@ function stepWalk(w: { yaw: number; x: number; z: number }, fwd: number, right: 
   const nz = w.z + -Math.cos(w.yaw) * fwd + -Math.sin(w.yaw) * right
   // stay near the property (±12 m beyond boundary) and out of the house
   if (nx < PLOT_BBOX.x0 - 14 || nx > PLOT_BBOX.x1 + 14 || nz < PLOT_BBOX.z0 - 14 || nz > PLOT_BBOX.z1 + 14) return
-  if (nx > 5.0 && nx < 9.6 && nz > 12.5 && nz < 20.3 && !pointInPoly(0, 0, PLOT)) return
-  if (nx > 5.0 && nx < 9.6 && nz > 12.5 && nz < 23.6) return // the house
   w.x = nx
   w.z = nz
 }

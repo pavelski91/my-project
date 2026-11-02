@@ -1,6 +1,6 @@
 # Narewka — Japandi Forest Sanctuary
 
-An interactive, browser-based 3D masterplan of a private property in **Narewka, Podlasie** (działka ewid. nr 420, ul. Adama Mickiewicza). It is a working architectural-visualisation and planning tool, not a render: you can orbit, walk the site, switch seasons and day/night, step through the project phases, move proposed buildings, reshape the boardwalk, and read live sustainability figures that are computed from the model.
+An interactive, browser-based 3D masterplan of a private property in **Narewka, Podlasie** (ul. Adama Mickiewicza 1, działka ewid. nr 420). It is a working architectural-visualisation and planning tool, not a render: you can orbit, walk the site, switch seasons and day/night, step through the project phases, move proposed buildings, reshape the boardwalk, and read live sustainability figures that are computed from the model.
 
 > *Japanese simplicity meets the wild landscape of Podlasie.*
 
@@ -11,6 +11,8 @@ An interactive, browser-based 3D masterplan of a private property in **Narewka, 
 | ![Isometric](docs/screenshots/s02-isometric.png) | ![Tour](docs/screenshots/s05-boardwalk-tour.png) |
 | **Eye level, terrace** | **Evening at the bania** |
 | ![Terrace](docs/screenshots/s04-eye-level-terrace.png) | ![Bania](docs/screenshots/s10-bania-evening.png) |
+
+Interior: [living + loft](docs/screenshots/s11-interior-living-loft.png) · [kitchen & stair](docs/screenshots/s12-interior-kitchen-stair.png) · [sleeping loft](docs/screenshots/s13-interior-sleeping-loft.png)
 
 More: [plan](docs/screenshots/s03-plan.png) · [night](docs/screenshots/s06-night.png) · [winter](docs/screenshots/s07-winter.png) · [autumn](docs/screenshots/s08-autumn-eye-level.png) · [annotated site plan](docs/screenshots/s09-site-plan.png)
 
@@ -65,7 +67,9 @@ The official development plan PDF (`Projekt zagospodarowania działki 420`, 1:50
 
 Accuracy: boundary corners and footprints ±0.3 m, spot heights ±0.1 m. See [docs/SITE_ANALYSIS.md](docs/SITE_ANALYSIS.md).
 
-The house is reproduced from the supplied renders: black standing-seam pitched roof (~40°), vertical timber cladding (dark long walls, warm gables), dark-framed glazing, sliding door, skylight, wood-stove flue, terrace with black steel pergola, sleeping loft, stair and open living space. The **existing house** (Phase 0) and **planned extension** (+3.3 m south, Phase 1, shown in fresher timber) are separate objects; the house is never moved or restyled.
+The house is reproduced from the supplied renders: black standing-seam pitched roof (~40°), vertical timber cladding (dark long walls, warm gables), dark-framed glazing, sliding door, skylight, wood-stove flue, terrace with black steel pergola, sleeping loft, stair and open living space. **Interior (after the extension, Phase 1+).** Walkable Japandi interior with a sleeping loft (*antresola*): pale-oak floor and whitewashed timber ceiling with tie beams and a track light; loft with low bed, slatted headboard, nightstands and a black-steel slat balustrade; oak stair behind a tall black slat screen (as in the supplied section); bathroom (WC, vanity with round mirror, walk-in shower) and built-in wardrobe under the loft; entrance hall; kitchen along the west wall with open shelves and a sink window; round dining table with paper-lantern pendant by the sliding door; living area with sofa, armchair, rug, wood stove on a slate hearth (flue through the roof), plants and art. Use *Eye level → Inside the house…* (living room, kitchen & stair, sleeping loft) or *Layers → Open roofs* for a cut-away. The layout is a design proposal informed by the supplied plan and section; confirm room sizes on site.
+
+The **existing house** (Phase 0) and **planned extension** (+3.3 m south, Phase 1, shown in fresher timber) are separate objects; the house is never moved or restyled.
 
 ## The three options and the recommendation
 

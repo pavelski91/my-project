@@ -219,7 +219,7 @@ export function SitePlanSVG({ svgRef }: { svgRef?: React.RefObject<SVGSVGElement
 
       {/* right panel */}
       <g transform={`translate(${OX + PW + 36} ${OY})`}>
-        <text y="12" fontSize="10.5" letterSpacing="2" fill="#5d7150" fontWeight="600">NAREWKA · DZIAŁKA 420 · 1418 m²</text>
+        <text y="12" fontSize="10.5" letterSpacing="2" fill="#5d7150" fontWeight="600">NAREWKA · MICKIEWICZA 1 · DZ. 420 · 1418 m²</text>
         <text y="42" fontSize="25" fill="#26292a" fontFamily="Georgia, 'Iowan Old Style', serif">Japandi Forest Sanctuary</text>
         <text y="64" fontSize="13" fill="#5b5f58">Annotated site plan · Option {optionId} — {layout.name} · Phase {phase}</text>
         <text y="82" fontSize="11" fill="#8a8a80">Concept design — dimensions traced from the survey plan, ±0.3 m. Not for construction.</text>

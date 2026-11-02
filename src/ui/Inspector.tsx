@@ -36,7 +36,7 @@ function Overview() {
     <>
       <Section title="Project">
         <p className="font-serif text-[16px] leading-snug">Narewka — Japandi Forest Sanctuary</p>
-        <p className="mt-1 text-[12px] leading-relaxed text-ink-2">Plot 420, ul. Adama Mickiewicza, Narewka (Podlasie). {fmt(m.plotArea, 0)} m² traced from the survey plan; house on the west side with road access to the north.</p>
+        <p className="mt-1 text-[12px] leading-relaxed text-ink-2">Narewka, ul. Adama Mickiewicza 1 (Podlasie), działka 420. {fmt(m.plotArea, 0)} m² traced from the survey plan; house on the west side with road access to the north.</p>
       </Section>
       <Section title="At a glance">
         <Row label="Option">{layout.name}</Row>
