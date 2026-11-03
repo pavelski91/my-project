@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { useStore } from '../store'
-import { HOUSE_EXISTING, HOUSE_EXTENSION, TERRACE, SHED_EXISTING, TERRAIN_Y0, GROUND_FLOOR_LEFT } from '../data/site'
+import { HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, LOGGIA, TERRACE, SHED_EXISTING, TERRAIN_Y0, GROUND_FLOOR_LEFT } from '../data/site'
 import { terrainY, TERRACE_DECK_Y } from '../lib/geometry'
 import { B, Cyl, Wall, Glazing, Gable, GableRoof, type Opening } from './prims'
 import { M, flatMat } from './materials'
@@ -100,6 +100,42 @@ export function Terrace({ onPick }: { onPick: ReturnType<typeof usePick> }) {
   )
 }
 
+/** Covered deck along the big south window — the remaining half of the plan's loggia, flush with the main terrace. */
+function Loggia() {
+  const l = LOGGIA
+  const w = l.x1 - l.x0, d = l.z1 - l.z0
+  const cx = (l.x0 + l.x1) / 2, cz = (l.z0 + l.z1) / 2
+  const top = TERRACE_DECK_Y
+  const { glow: night } = useSunState()
+  return (
+    <group>
+      <B at={[cx, top - 0.05, cz]} s={[w, 0.1, d]} m={M.deck} />
+      <B at={[cx, top - 0.22, cz]} s={[w - 0.1, 0.22, d - 0.1]} m={M.steel} cast={false} />
+      {[[l.x0 + 0.1, l.z1 - 0.1], [cx, l.z1 - 0.1], [l.x1 - 0.1, l.z1 - 0.1]].map(([px, pz], i) => {
+        const g = terrainY(px, pz)
+        return <B key={i} at={[px, g - 0.1 + (top - g) / 2, pz]} s={[0.14, top - g + 0.2, 0.14]} m={M.concrete} />
+      })}
+      {/* black steel pergola, same language as the main terrace */}
+      {[l.x0 + 0.1, l.x1 - 0.1].map((px, i) => <B key={'p' + i} at={[px, top + 1.3, l.z1 - 0.1]} s={[0.1, 2.6, 0.1]} m={M.steel} />)}
+      <B at={[cx, top + 2.62, l.z1 - 0.1]} s={[w, 0.16, 0.1]} m={M.steel} />
+      <B at={[cx, top + 2.62, l.z0 + 0.1]} s={[w, 0.16, 0.1]} m={M.steel} />
+      {Array.from({ length: 6 }, (_, i) => <B key={'r' + i} at={[l.x0 + 0.25 + i * 0.7, top + 2.72, cz]} s={[0.06, 0.08, d]} m={M.steel} />)}
+      {/* two lounge chairs + planter facing the window */}
+      {[-0.9, 0.9].map((dx, i) => (
+        <group key={i} position={[cx + dx, top, cz + 0.3]} rotation={[0, Math.PI + dx * 0.15, 0]}>
+          <B at={[0, 0.25, 0]} s={[0.55, 0.06, 0.55]} m={M.light} />
+          <B at={[0, 0.55, 0.26]} s={[0.55, 0.5, 0.05]} m={M.light} />
+          <B at={[0, 0.34, 0]} s={[0.5, 0.1, 0.5]} m={M.fabricSage} />
+        </group>
+      ))}
+      <B at={[cx, top + 0.2, l.z1 - 0.35]} s={[1.4, 0.4, 0.3]} m={M.light} />
+      <B at={[cx, top + 0.5, l.z1 - 0.35]} s={[1.3, 0.2, 0.22]} m={M.green} cast={false} />
+      <B at={[cx - 1.0, top + 2.4, cz]} s={[0.1, 0.24, 0.1]} m={M.lamp} cast={false} />
+      {night > 0.2 && <pointLight position={[cx, top + 2.2, cz]} intensity={2.5 * night} distance={5} color="#ffbb70" decay={1.6} />}
+    </group>
+  )
+}
+
 export function ExistingShed({ onPick }: { onPick: ReturnType<typeof usePick> }) {
   const b = SHED_EXISTING
   const cx = (b.x0 + b.x1) / 2, cz = (b.z0 + b.z1) / 2
@@ -138,6 +174,8 @@ export function House() {
   const y0 = HOUSE_Y0
   const Lx = 7.4
   const Lext = 3.3
+  const Lbay = 1.0
+  const zB = (HOUSE_BAY.z0 + HOUSE_BAY.z1) / 2
 
   const eastEx: Opening[] = [
     o(-3.1, -2.7, 0.5, 2.3), // narrow vertical slit window
@@ -148,7 +186,9 @@ export function House() {
   const westExt: Opening[] = [o(-0.35, 0.05, 0.5, 2.3)]
   const northExtOps: Opening[] = [ox(0.3, 1.6, 0.8, 1.95)] // above the bed head
   const northOps: Opening[] = []
-  const southOps: Opening[] = [ox(-0.2, 1.6, 0.55, 2.25, { mullions: 1 })] // gable window beside the terrace
+  const southOps: Opening[] = [ox(-1.55, 1.55, 0.15, 2.7, { mullions: 2 })] // the big south window (now in the kitchen bay)
+  const eastBay: Opening[] = [o(-0.4, 0.4, 0, 2.25, { door: true })] // glazed door from the kitchen to the loggia/terrace
+  const westBay: Opening[] = [o(-0.35, 0.35, 1.0, 2.1)]
 
   // house group for the whole footprint: local z origin at centre of full extension scheme
   return (
@@ -160,9 +200,9 @@ export function House() {
         <LongWall side={1} len={Lx} ops={eastEx} mat={M.charred} y0={y0} />
         <LongWall side={-1} len={Lx} ops={westEx} mat={M.charred} y0={y0} />
         {!extOn && <EndWall z={-Lx / 2} ops={[ox(-0.7, 0.7, 1.0, 1.9)]} mat={M.larchWarm} gableMat={M.larchWarm} face={-1} />}
-        <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />
+        {!extOn && <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />}
         <group visible={!interiors}>
-          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[extOn ? 0 : 0.3, 0.3]} />
+          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[extOn ? 0 : 0.3, extOn ? 0 : 0.3]} />
         </group>
         {/* skylight */}
         <group position={[-0.95, EAVE + 0.55, 0.4]} rotation={[0, 0, PITCH]}>
@@ -197,6 +237,20 @@ export function House() {
           <pointLight position={[0, 1.8, 0]} intensity={3 + 5 * night} distance={6} color="#ffc98a" decay={1.6} />
         </group>
       )}
+      {extOn && (
+        <group position={[x, y0, zB]}>
+          <B at={[0, -0.18, 0]} s={[W + 0.1, 0.36, Lbay + 0.05]} m={M.concrete} />
+          <B at={[0, 0.0, 0]} s={[W - 0.1, 0.02, Lbay]} m={M.light} cast={false} />
+          <LongWall side={1} len={Lbay} ops={eastBay} mat={charredNew} y0={y0} />
+          <LongWall side={-1} len={Lbay} ops={westBay} mat={charredNew} y0={y0} />
+          <EndWall z={Lbay / 2} ops={southOps} mat={M.larchNew} gableMat={M.larchNew} face={1} />
+          <group visible={!interiors}>
+            <GableRoof W={W} L={Lbay} eave={EAVE} pitch={PITCH} endOv={[0, 0.35]} />
+          </group>
+          <B at={[W / 2 + 0.09, 1.9, 0.3]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
+        </group>
+      )}
+      {extOn && <Loggia />}
       {/* interior: Japandi with sleeping loft — the whole program sits inside the existing 4.2 × 7.4 m body */}
       <group position={[x, y0, zE]}>
         <HouseInterior />

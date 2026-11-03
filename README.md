@@ -104,6 +104,10 @@ All values come from the model geometry; nothing is typed in.
 * **Boardwalk gradient** is measured on the actual elevated deck line (target ≤ 8.3 %).
 * **Unknown values are shown as unknown** — soil infiltration, groundwater, soil pH, existing flora, carbon/energy performance and garden water demand.
 
+## Warunki zabudowy (WZ)
+
+[docs/WZ_CHECK.md](docs/WZ_CHECK.md) — what the WZ decision allows (70 m² built area per building, 2 storeys, 8 m, roof 30–45°, building lines) and how the model uses it. The house is now 49 m² built area: existing + poured-slab extension + a 1 m kitchen bay taken from the loggia.
+
 ## Planting & biodiversity, phasing, assumptions
 
 * [docs/PLANTING_STRATEGY.md](docs/PLANTING_STRATEGY.md) — zones, species palette (native vs cultivar), flowering sequence, habitats, water and soil strategy.

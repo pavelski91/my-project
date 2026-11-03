@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { useStore } from '../store'
-import { PLOT, PLOT_LABELS, UTILITIES, SPOT_HEIGHTS, HOUSE_EXISTING, HOUSE_EXTENSION, TERRACE, SECOND_DWELLING, SHED_EXISTING, ENTRANCE, PLAN_BALANCE } from '../data/site'
+import { PLOT, PLOT_LABELS, UTILITIES, SPOT_HEIGHTS, HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, LOGGIA, TERRACE, SECOND_DWELLING, SHED_EXISTING, ENTRANCE, PLAN_BALANCE } from '../data/site'
 import { ZONE_INFO } from '../data/catalog'
 import { elevation, rectCorners, boxToRect, samplePath, signedDistToPlot, type V2, type Rect } from '../lib/geometry'
 import { SPECIES } from '../data/species'
@@ -76,6 +76,8 @@ export function SitePlanSVG({ svgRef }: { svgRef?: React.RefObject<SVGSVGElement
   push('Existing house', `${(HOUSE_EXISTING.x1 - HOUSE_EXISTING.x0).toFixed(1)} × ${(HOUSE_EXISTING.z1 - HOUSE_EXISTING.z0).toFixed(1)} m · floor 148.10`, boxToRect(HOUSE_EXISTING), '#3b3f40', 'house')
   if (phase >= 1) {
     push('Planned extension — bedroom (+ loft above)', '+3.3 m next to the bathroom, Phase 1', boxToRect(HOUSE_EXTENSION), '#6b5440', 'ext')
+    push('Kitchen bay', '+1.0 m, half of the loggia, Phase 1', boxToRect(HOUSE_BAY), '#6b5440', 'ext')
+    push('Loggia & terrace', 'covered deck along the south window, Phase 1', boxToRect(LOGGIA), '#b49a78', 'deck')
     push('Terrace & pergola', 'Phase 1', boxToRect(TERRACE), '#b49a78', 'deck')
   } else push('Existing tin garage', 'g1 · removed in Phase 1', boxToRect(SHED_EXISTING), '#9aa4a6', 'shed')
   layout.structures.filter((s) => s.phase <= phase).forEach((s) => push(s.label, `${s.w.toFixed(1)} × ${s.d.toFixed(1)} m = ${(s.w * s.d).toFixed(1)} m² · Phase ${s.phase}`, s, s.kind === 'bania' ? '#b49a78' : s.kind === 'greenhouse' ? '#cfe0d6' : s.kind === 'workshop' ? '#7a6a55' : s.kind === 'carport' ? '#a9a9a0' : '#3b3f40', s.kind))

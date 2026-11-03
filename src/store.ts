@@ -47,7 +47,7 @@ export const VIEWPOINTS = [
   { id: 'house-kitchen', name: 'Inside the house — kitchen, stair & bath', pos: [8.2, 17.0] as V2, look: [6.9, 13.4] as V2, eyeY: 0 },
   { id: 'house-bedroom', name: 'Inside the extension — bedroom', pos: [6.6, 12.3] as V2, look: [8.2, 9.6] as V2, eyeY: 0 },
   { id: 'house-loft', name: 'Inside the house — loft over bath & bedroom', pos: [7.6, 11.4] as V2, look: [7.4, 16.0] as V2, eyeY: 1.8, pitch: -0.1 },
-  { id: 'carport', name: 'At the 2-car carport', pos: [24.5, 8.6] as V2, look: [33.2, 5.0] as V2 },
+  { id: 'carport', name: 'At the 2-car carport', pos: [22.5, 9.0] as V2, look: [29.6, 5.0] as V2 },
   { id: 'workshop', name: 'At the workshop', pos: [0, 0] as V2, look: [0, 0] as V2 },
   { id: 'pond', name: 'At the pond', pos: [0, 0] as V2, look: [0, 0] as V2, pitch: -0.36 },
   { id: 'meadow', name: 'In the meadow', pos: [14, 8.5] as V2, look: [24, 14] as V2 },

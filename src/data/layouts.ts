@@ -119,7 +119,7 @@ const B: Layout = {
     S('wellness', 'wellness', 'Gym & sauna pavilion', 21.3, 22.4, 6.6, 4.2, -90, 4, 3.0, [5.4, 8.0], [3.6, 5.0]),
     S('bania', 'bania', 'Bania (wood-fired tub) & deck', 30.4, 22.8, 3.8, 3.4, 0, 4, 1.0, [3.2, 5.2], [3.0, 4.4]),
     S('greenhouse', 'greenhouse', 'Greenhouse', 26.2, 28.5, 4.4, 3.0, 0, 5, 2.0, [3.0, 5.6], [2.4, 3.6]),
-    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 33.2, 4.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
+    S('carport', 'carport', 'Carport — 2 cars (wiata garażowa)', 29.6, 4.6, 5.6, 5.2, 0, 2, 1.5, [5.0, 7.0], [4.8, 6.0]),
     S('workshop', 'workshop', 'Workshop & tool house', 9.6, 34.0, 3.6, 2.8, 0, 2, 2.0, [2.6, 5.0], [2.2, 3.6]),
   ],
   features: [

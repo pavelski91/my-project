@@ -1,5 +1,5 @@
 import type { Layout, Structure, Feature, ZoneType } from '../data/layouts'
-import { ENTRANCE, HOUSE_EXISTING, HOUSE_EXTENSION, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT } from '../data/site'
+import { ENTRANCE, HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, LOGGIA, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT } from '../data/site'
 import { boxToRect, distToSegment, pointInPoly, rectCirclesPoint, samplePath, type PathSample, type Rect, type V2, rad } from './geometry'
 import { apronRect } from './validate'
 
@@ -25,6 +25,8 @@ export function makeCtx(layout: Layout, phase: number, releaseSecond: boolean): 
   const fixed: GroundCtx['fixed'] = [{ rect: boxToRect(HOUSE_EXISTING), cls: 'building', id: 'house' }]
   if (phase >= 1) {
     fixed.push({ rect: boxToRect(HOUSE_EXTENSION), cls: 'building', id: 'extension' })
+    fixed.push({ rect: boxToRect(HOUSE_BAY), cls: 'building', id: 'bay' })
+    fixed.push({ rect: boxToRect(LOGGIA), cls: 'deck', id: 'loggia' })
     fixed.push({ rect: boxToRect(TERRACE), cls: 'deck', id: 'terrace' })
   } else fixed.push({ rect: boxToRect(SHED_EXISTING), cls: 'building', id: 'shed' })
   const bw = phase >= 2 ? samplePath(layout.boardwalk, 0.4).samples : []
@@ -76,7 +78,7 @@ export function exclusions(c: GroundCtx): { rect: Rect; pad: number }[] {
   const o: { rect: Rect; pad: number }[] = []
   for (const f of c.fixed) o.push({ rect: f.rect, pad: f.id === 'terrace' ? 0.6 : 1.8 })
   if (!c.releaseSecond) o.push({ rect: boxToRect(SECOND_DWELLING), pad: 1.4 })
-  if (c.phase >= 1) o.push({ rect: boxToRect(HOUSE_EXTENSION), pad: 1.8 })
+  if (c.phase >= 1) { o.push({ rect: boxToRect(HOUSE_EXTENSION), pad: 1.8 }); o.push({ rect: boxToRect(HOUSE_BAY), pad: 1.8 }) }
   for (const s of c.structs) o.push({ rect: s, pad: s.kind === 'bania' ? 1.0 : 1.5 })
   for (const f of c.feats) if (f.kind !== 'habitat' && f.kind !== 'hammock' && f.kind !== 'dining') o.push({ rect: f, pad: f.kind === 'beds' ? 0.4 : f.kind === 'pond' ? 2.6 : 0.8 })
   if (c.phase >= 2) {

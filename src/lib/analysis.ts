@@ -1,5 +1,5 @@
 import type { Layout, ZoneType } from '../data/layouts'
-import { HOUSE_EXISTING, HOUSE_EXTENSION, PLAN_BALANCE, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT } from '../data/site'
+import { HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, PLAN_BALANCE, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT } from '../data/site'
 import { boxToRect, pointInPoly, polyArea, PLOT_BBOX, samplePath, maxGradient, type Rect } from './geometry'
 import { classifyPoint, makeCtx, type GroundClass } from './ground'
 import { generateVegetation, plantStats, type Vegetation } from './vegetation'
@@ -74,6 +74,8 @@ export function computeMetrics(layout: Layout, phase: number, releaseSecond: boo
   if (phase >= 1) {
     const e = boxToRect(HOUSE_EXTENSION)
     parts.push({ label: 'House extension', area: e.w * e.d })
+    const bay = boxToRect(HOUSE_BAY)
+    parts.push({ label: 'Kitchen bay (half of loggia)', area: bay.w * bay.d })
   } else {
     const s = boxToRect(SHED_EXISTING)
     parts.push({ label: 'Existing tin garage', area: s.w * s.d })
@@ -87,7 +89,7 @@ export function computeMetrics(layout: Layout, phase: number, releaseSecond: boo
 
   // roof water
   let roof = ex.w * ex.d * ASSUMPTIONS.roofOverhang
-  if (phase >= 1) roof += boxToRect(HOUSE_EXTENSION).w * boxToRect(HOUSE_EXTENSION).d * ASSUMPTIONS.roofOverhang
+  if (phase >= 1) roof += (boxToRect(HOUSE_EXTENSION).w * boxToRect(HOUSE_EXTENSION).d + boxToRect(HOUSE_BAY).w * boxToRect(HOUSE_BAY).d) * ASSUMPTIONS.roofOverhang
   for (const s of layout.structures) if (s.phase <= phase && s.kind !== 'bania') roof += roofOf(s, s.kind)
   for (const f of layout.features) if (f.enabled && f.phase <= phase && ['toolshed', 'bikes'].includes(f.kind)) roof += f.w * f.d * 1.15
   // pergola over terrace is open — not counted
@@ -156,6 +158,7 @@ export function greenhouseSolar(layout: Layout, phase: number, releaseSecond: bo
   if (!gh) return null
   const occ: Occluder[] = [{ rect: boxToRect(HOUSE_EXISTING), h: 4.7 }]
   occ.push({ rect: boxToRect(HOUSE_EXTENSION), h: 4.3 })
+  occ.push({ rect: boxToRect(HOUSE_BAY), h: 4.3 })
   if (!releaseSecond) occ.push({ rect: boxToRect(SECOND_DWELLING), h: 4.7 })
   occ.push({ rect: boxToRect(TERRACE), h: 0.1 })
   for (const s of layout.structures) if (s.kind !== 'greenhouse' && s.phase <= phase) occ.push({ rect: s, h: STRUCT_H[s.kind] })

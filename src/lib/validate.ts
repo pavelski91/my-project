@@ -1,6 +1,6 @@
 import type { Layout } from '../data/layouts'
 import {
-  HOUSE_EXISTING, HOUSE_EXTENSION, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT, ENTRANCE, UTILITIES,
+  HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, LOGGIA, WZ, SECOND_DWELLING, SHED_EXISTING, TERRACE, PLOT, ENTRANCE, UTILITIES,
 } from '../data/site'
 import {
   boxToRect, distToPolyline, polyOverlap, rectCorners, rectInsidePlot, samplePath, rectCirclesPoint, type Rect, distToSegment,
@@ -38,6 +38,8 @@ export function fixedObstacles(phase: number, s: Settings): Obstacle[] {
   ]
   if (phase >= 1) {
     o.push({ id: 'extension', label: 'House extension', rect: boxToRect(HOUSE_EXTENSION), fixed: true })
+    o.push({ id: 'bay', label: 'Kitchen bay', rect: boxToRect(HOUSE_BAY), fixed: true })
+    o.push({ id: 'loggia', label: 'Loggia', rect: boxToRect(LOGGIA), walkable: true, fixed: true })
     o.push({ id: 'terrace', label: 'Main terrace', rect: boxToRect(TERRACE), walkable: true, fixed: true })
   }
   if (phase < 1) o.push({ id: 'shed', label: 'Existing tin garage', rect: boxToRect(SHED_EXISTING), fixed: true })
@@ -65,6 +67,14 @@ export function validateLayout(L: Layout, s: Settings, phase = 5): Issue[] {
     if (!rectInsidePlot(f, 0)) issues.push({ id: `out-${f.id}`, severity: 'error', text: `${f.label} extends outside the property boundary.`, ids: [f.id] })
     else if (!rectInsidePlot(f, featureSetbackFor(f.kind, s)))
       issues.push({ id: `sb-${f.id}`, severity: 'info', text: `${f.label} is within ${featureSetbackFor(f.kind, s).toFixed(1)} m of the boundary.`, ids: [f.id] })
+  }
+
+  // WZ building line: ≥ 6 m from the east boundary (municipal road 469) — structures only
+  for (const st of structures) {
+    if (st.kind === 'bania') continue
+    let dmin = Infinity
+    for (const [px, pz] of rectCorners(st)) for (const e of [1, 2]) dmin = Math.min(dmin, distToSegment(px, pz, PLOT[e], PLOT[(e + 1) % PLOT.length]))
+    if (dmin < WZ.lineEast - 0.01) issues.push({ id: `bl-${st.id}`, severity: 'warn', text: `${st.label} is ${dmin.toFixed(1)} m from the east boundary — WZ building line is ${WZ.lineEast} m from road plot 469 (verify which boundary).`, ids: [st.id] })
   }
 
   // collisions

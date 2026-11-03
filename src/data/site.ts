@@ -85,6 +85,12 @@ export interface Box {
 export const HOUSE_EXISTING: Box = { x0: 5.2, z0: 12.7, x1: 9.4, z1: 20.1 }
 /** Planned extension (garage for 2 cars) behind the sleeping-loft end, i.e. on the NORTH side facing the entrance drive. (old note: +3.3 m so total length ≈ 10.7 m, matching the supplied floor plan (≈2.5 : 1). */
 export const HOUSE_EXTENSION: Box = { x0: 5.2, z0: 9.4, x1: 9.4, z1: 12.7 }
+/** South kitchen bay: half of the plan's loggia (≈ 2 m deep) is built into the house → +1.0 m of floor for the kitchen. */
+export const HOUSE_BAY: Box = { x0: 5.2, z0: 20.1, x1: 9.4, z1: 21.1 }
+/** The other half of the loggia stays as a covered deck along the big south window (flush with the main terrace). */
+export const LOGGIA: Box = { x0: 5.2, z0: 21.1, x1: 9.4, z1: 23.0 }
+/** WZ decision GN.6730.101.2024.MS (29.11.2024) — limits per building. */
+export const WZ = { builtMax: 70, floorMax: 120, storeysMax: 2, heightMax: 8, pitch: [30, 45] as [number, number], frontMax: 12, parking: [2, 4] as [number, number], bioMin: 500, lineRoad: 8, lineEast: 6 }
 /** Main terrace + pergola on the east long side (as in reference renders). */
 export const TERRACE: Box = { x0: 9.4, z0: 16.4, x1: 14.2, z1: 23.6 }
 /** Second dwelling shown on the plan (hatch on the right). Not part of this brief. */
@@ -109,7 +115,7 @@ export const ENTRANCE = {
   apron: { x0: 20.0, x1: 29.2, depth: 5.5 }, // paved hardstand (proposal within the plan's 98 m² paved allowance)
   waste: { x: 31.8, z: -1.5, w: 2.4, d: 1.4 },
   /** drive from the vehicle gate to the garage (permeable pavers / gravel), centre line + width */
-  drive: { pts: [[24.0, -0.8], [25.6, 2.0], [28.0, 3.9], [30.3, 4.7]] as [number, number][], width: 3.2 },
+  drive: { pts: [[24.0, -0.8], [24.8, 2.2], [26.0, 4.0], [27.0, 4.7]] as [number, number][], width: 3.2 },
 }
 
 export const SITE_FACTS = {
@@ -123,8 +129,9 @@ export const SITE_FACTS = {
 export const VERIFY_ITEMS: { id: string; title: string; detail: string }[] = [
   { id: 'north', title: 'True north', detail: 'Assumed that the survey sheet is north-up. The sun path uses a configurable north offset in Settings.' },
   { id: 'setbacks', title: 'Setbacks to boundaries', detail: 'Plan shows building lines on the road and east side only. Defaults here: 3.0 m for habitable pavilions and 1.0 m for decks/features. Confirm with MPZP/WZ and Prawo budowlane (§12 WT) before final siting.' },
-  { id: 'permit', title: 'Permits & built-area limit', detail: 'The plan allows 70 m² built area (two ~35 m² dwellings). Additional pavilions (office, gym/sauna, greenhouse, bania) need a legal route (zgłoszenie / pozwolenie, MPZP intensity limits). Not assumed.' },
-  { id: 'second', title: 'Second dwelling footprint', detail: 'The PDF shows two dwellings. You confirmed the second one will not be built, so that land is released by default and used for the pavilions (switch it back in Settings → Use second-dwelling land). Plan utility routes to it are ignored in the checks.' },
+  { id: 'permit', title: 'Permits & built-area limit (WZ read)', detail: 'The WZ decision (29.11.2024) allows two detached residential buildings, each ≤ 70 m² built area, ≤ 120 m² floor area, ≤ 2 storeys, ≤ 8 m high, gable roof 30–45° with a usable attic, front elevation ≤ 10 m (+20 %), 2–4 parking spaces, ≥ 500 m² biologically active area. It says nothing about office, gym/sauna, bania, greenhouse, workshop or carport — those need their own legal route (notification / permit / classification as outbuildings) and are not assumed.' },
+  { id: 'line', title: 'Building lines (WZ)', detail: 'Buildings must stand ≥ 8.0 m from the outer edge of the carriageway of ul. Mickiewicza and ≥ 6.0 m from the boundary of municipal road plot 469 (taken here as the east boundary B–C–D, as on the development plan). The app flags structures inside the 6 m east strip. Confirm which boundary plot 469 is with your surveyor.' },
+  { id: 'second', title: 'Second dwelling (WZ allows two)', detail: 'The PDF shows two dwellings. You confirmed the second one will not be built, so that land is released by default and used for the pavilions (switch it back in Settings → Use second-dwelling land). Plan utility routes to it are ignored in the checks.' },
   { id: 'shed', title: 'Existing tin garage', detail: 'Blue "g1" on the plot (~3.4 × 4.6 m) touches the planned extension. Masterplan assumes removal/relocation in Phase 1.' },
   { id: 'utilities', title: 'Utility capacity', detail: 'Water/sewer/electric routes are the plan\'s proposals (end at the dwellings). Branches for pavilions, sauna power load and drainage of bania/shower are unverified. Septic/sewer connection for the sauna shower, outdoor shower and bania drainage must be checked.' },
   { id: 'soil', title: 'Soil, groundwater & infiltration', detail: 'No geotechnical data. Rain-garden/pond/foundation (screw piles) assumptions need a percolation test and a groundwater check; SE corner is the lowest point (145.4–146.5 m).' },
