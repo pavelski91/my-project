@@ -64,8 +64,9 @@ export function Annotations() {
   const sec = boxToRect(SECOND_DWELLING)
   const tags: { id: string; x: number; z: number; y: number; text: string; phase: number }[] = [
     { id: 'house', x: 7.3, z: 14.5, y: HOUSE_Y0 + HOUSE_RIDGE + 1.2, text: 'Existing house', phase: 0 },
-    { id: 'extension', x: 7.3, z: 11.0, y: HOUSE_Y0 + HOUSE_RIDGE + 0.8, text: 'Extension · bedroom ↓ reading + 2nd bedroom ↑', phase: 1 },
-    { id: 'terrace', x: 12.0, z: 22.4, y: HOUSE_Y0 + 3.3, text: 'Terrace & pergola', phase: 1 },
+    { id: 'extension', x: 7.3, z: 11.0, y: HOUSE_Y0 + HOUSE_RIDGE + 0.8, text: 'Extension · parents ↓ kids’ loft ↑', phase: 1 },
+    { id: 'terrace', x: 15.6, z: 22.6, y: HOUSE_Y0 + 3.3, text: 'Terrace & pergola', phase: 1 },
+    { id: 'bay', x: 11.5, z: 16.8, y: HOUSE_Y0 + HOUSE_RIDGE + 1.4, text: 'Family annex · kitchen · dining · living', phase: 1 },
     ...layout.structures.map((s) => ({ id: s.id, x: s.x, z: s.z, y: terrainY(s.x, s.z) + 4.2, text: `${s.label} · ${(s.kind === 'bania' ? s.w * s.d : s.w * s.d).toFixed(0)} m²`, phase: s.phase })),
   ]
   return (

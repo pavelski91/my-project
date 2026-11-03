@@ -97,6 +97,7 @@ function BuildingsTab() {
   const fixed = [
     { id: 'house', area: 4.2 * 7.4 },
     { id: 'extension', area: 4.2 * 3.3 },
+    { id: 'bay', area: 4.2 * 5.9 },
     { id: 'terrace', area: 4.8 * 7.2 },
     ...(phase < 1 ? [{ id: 'shed', area: 3.4 * 4.6 }] : []),
     ...(useStore.getState().settings.releaseSecondDwelling ? [] : [{ id: 'second', area: 4.3 * 7.4 }]),

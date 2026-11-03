@@ -75,7 +75,7 @@ export function computeMetrics(layout: Layout, phase: number, releaseSecond: boo
     const e = boxToRect(HOUSE_EXTENSION)
     parts.push({ label: 'House extension', area: e.w * e.d })
     const bay = boxToRect(HOUSE_BAY)
-    parts.push({ label: 'Kitchen bay (half of loggia)', area: bay.w * bay.d })
+    parts.push({ label: 'Family annex (kitchen · dining · living)', area: bay.w * bay.d })
   } else {
     const s = boxToRect(SHED_EXISTING)
     parts.push({ label: 'Existing tin garage', area: s.w * s.d })

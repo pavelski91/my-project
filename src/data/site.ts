@@ -86,13 +86,13 @@ export const HOUSE_EXISTING: Box = { x0: 5.2, z0: 12.7, x1: 9.4, z1: 20.1 }
 /** Planned extension (garage for 2 cars) behind the sleeping-loft end, i.e. on the NORTH side facing the entrance drive. (old note: +3.3 m so total length ≈ 10.7 m, matching the supplied floor plan (≈2.5 : 1). */
 export const HOUSE_EXTENSION: Box = { x0: 5.2, z0: 9.4, x1: 9.4, z1: 12.7 }
 /** South kitchen bay: half of the plan's loggia (≈ 2 m deep) is built into the house → +1.0 m of floor for the kitchen. */
-export const HOUSE_BAY: Box = { x0: 5.2, z0: 20.1, x1: 9.4, z1: 21.1 }
+export const HOUSE_BAY: Box = { x0: 9.4, z0: 14.2, x1: 13.6, z1: 20.1 } // = family annex (kitchen · dining · living), built-area budget: 31.1 + 13.9 + 24.8 = 69.8 m² ≤ 70
 /** The other half of the loggia stays as a covered deck along the big south window (flush with the main terrace). */
-export const LOGGIA: Box = { x0: 5.2, z0: 21.1, x1: 9.4, z1: 23.0 }
+export const LOGGIA: Box = { x0: 9.4, z0: 20.1, x1: 13.6, z1: 22.0 }
 /** WZ decision GN.6730.101.2024.MS (29.11.2024) — limits per building. */
 export const WZ = { builtMax: 70, floorMax: 120, storeysMax: 2, heightMax: 8, pitch: [30, 45] as [number, number], frontMax: 12, parking: [2, 4] as [number, number], bioMin: 500, lineRoad: 8, lineEast: 6 }
 /** Main terrace + pergola on the east long side (as in reference renders). */
-export const TERRACE: Box = { x0: 9.4, z0: 16.4, x1: 14.2, z1: 23.6 }
+export const TERRACE: Box = { x0: 13.6, z0: 15.6, x1: 17.4, z1: 22.0 }
 /** Second dwelling shown on the plan (hatch on the right). Not part of this brief. */
 export const SECOND_DWELLING: Box = { x0: 25.2, z0: 16.6, x1: 29.5, z1: 24.0 }
 /** Existing tin garage (blaszak) 'g1' on the plot. */

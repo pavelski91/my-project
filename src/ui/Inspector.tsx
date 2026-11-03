@@ -1,7 +1,7 @@
 import { useStore } from '../store'
 import { CATALOG, FEATURE_NOTES } from '../data/catalog'
 import { LAYOUTS } from '../data/layouts'
-import { HOUSE_EXISTING, HOUSE_EXTENSION, TERRACE, SECOND_DWELLING, SHED_EXISTING, GROUND_FLOOR_LEFT, GROUND_FLOOR_RIGHT, ENTRANCE } from '../data/site'
+import { HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, TERRACE, SECOND_DWELLING, SHED_EXISTING, GROUND_FLOOR_LEFT, GROUND_FLOOR_RIGHT, ENTRANCE } from '../data/site'
 import { terrainY } from '../lib/geometry'
 import { rotateSelected, tryMove, useIssues, rectOf } from '../scene/Editing'
 import { Btn, NumberField, Row, Section, Slider, Toggle, cx, fmt, useMetrics } from './kit'
@@ -63,6 +63,7 @@ function Fixed({ id }: { id: string }) {
   const dims: Record<string, { box: { x0: number; z0: number; x1: number; z1: number }; level?: string }> = {
     house: { box: HOUSE_EXISTING, level: `${GROUND_FLOOR_LEFT.toFixed(2)} m a.s.l. (floor)` },
     extension: { box: HOUSE_EXTENSION, level: `${GROUND_FLOOR_LEFT.toFixed(2)} m a.s.l. (floor)` },
+    bay: { box: HOUSE_BAY, level: `${GROUND_FLOOR_LEFT.toFixed(2)} m a.s.l. (floor)` },
     terrace: { box: TERRACE, level: `${(GROUND_FLOOR_LEFT - 0.04).toFixed(2)} m a.s.l. (deck)` },
     shed: { box: SHED_EXISTING },
     second: { box: SECOND_DWELLING, level: `${GROUND_FLOOR_RIGHT.toFixed(2)} m a.s.l. (plan p.p.p.)` },
@@ -174,7 +175,7 @@ export function Inspector() {
   const feat = layout.features.find((f) => f.id === selected)
 
   let body: React.ReactNode = <Overview />
-  if (selected && CATALOG[selected] && ['house', 'extension', 'terrace', 'shed', 'second'].includes(selected)) body = <Fixed id={selected} />
+  if (selected && CATALOG[selected] && ['house', 'extension', 'bay', 'terrace', 'shed', 'second'].includes(selected)) body = <Fixed id={selected} />
   else if (struct) {
     const c = CATALOG[struct.kind]
     const g = terrainY(struct.x, struct.z)

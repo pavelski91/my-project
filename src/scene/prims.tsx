@@ -36,6 +36,7 @@ export interface Opening {
   mullions?: number
   door?: boolean
   fixed?: boolean
+  open?: boolean // true opening without glazing (passage)
 }
 
 /** Wall (along local x, from -L/2..L/2, y 0..H) with true openings. */

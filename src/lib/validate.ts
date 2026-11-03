@@ -38,7 +38,7 @@ export function fixedObstacles(phase: number, s: Settings): Obstacle[] {
   ]
   if (phase >= 1) {
     o.push({ id: 'extension', label: 'House extension', rect: boxToRect(HOUSE_EXTENSION), fixed: true })
-    o.push({ id: 'bay', label: 'Kitchen bay', rect: boxToRect(HOUSE_BAY), fixed: true })
+    o.push({ id: 'bay', label: 'Family annex', rect: boxToRect(HOUSE_BAY), fixed: true })
     o.push({ id: 'loggia', label: 'Loggia', rect: boxToRect(LOGGIA), walkable: true, fixed: true })
     o.push({ id: 'terrace', label: 'Main terrace', rect: boxToRect(TERRACE), walkable: true, fixed: true })
   }

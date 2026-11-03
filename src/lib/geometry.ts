@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { HOUSE_EXISTING, HOUSE_EXTENSION, GROUND_FLOOR_LEFT, PLOT, SPOT_HEIGHTS, TERRAIN_Y0 } from '../data/site'
+import { HOUSE_EXISTING, HOUSE_EXTENSION, HOUSE_BAY, GROUND_FLOOR_LEFT, PLOT, SPOT_HEIGHTS, TERRAIN_Y0 } from '../data/site'
 
 export type V2 = [number, number]
 
@@ -192,7 +192,7 @@ export function elevation(x: number, z: number) {
   let h = planeH(x, z) + sr / sw
   h += (fbm(x * 0.35, z * 0.35) - 0.5) * 0.09 // micro-relief
   // level pad below existing house + extension (finished floor at 148.10)
-  const b = { x0: Math.min(HOUSE_EXISTING.x0, HOUSE_EXTENSION.x0), x1: Math.max(HOUSE_EXISTING.x1, HOUSE_EXTENSION.x1), z0: HOUSE_EXTENSION.z0, z1: HOUSE_EXISTING.z1 }
+  const b = { x0: Math.min(HOUSE_EXISTING.x0, HOUSE_EXTENSION.x0), x1: Math.max(HOUSE_EXISTING.x1, HOUSE_EXTENSION.x1, HOUSE_BAY.x1 + 3.8), z0: HOUSE_EXTENSION.z0, z1: HOUSE_EXISTING.z1 }
   const dx = Math.max(b.x0 - 1 - x, 0, x - (b.x1 + 1))
   const dz = Math.max(b.z0 - 1 - z, 0, z - (b.z1 + 4.4 - 3.3))
   const dist = Math.hypot(dx, dz)
@@ -242,7 +242,7 @@ export function samplePath(pts: V2[], step = 0.25, lift = 0.28, startY: number |
   for (let k = 0; k < 4; k++)
     for (let i = 1; i < samples.length - 1; i++) samples[i].y = (samples[i - 1].y + samples[i].y * 2 + samples[i + 1].y) / 4
   if (startY !== null) samples[0].y = startY
-  const floor = (i: number) => terrainY(samples[i].x, samples[i].z) + 0.14
+  const floor = (i: number) => terrainY(samples[i].x, samples[i].z) + 0.08
   for (let pass = 0; pass < 2; pass++) {
     for (let i = 1; i < samples.length; i++) samples[i].y = Math.max(samples[i].y, samples[i - 1].y - BW_MAX_GRADE * ds, floor(i))
     for (let i = samples.length - 2; i >= 0; i--) {
@@ -250,6 +250,8 @@ export function samplePath(pts: V2[], step = 0.25, lift = 0.28, startY: number |
       samples[i].y = Math.max(samples[i].y, samples[i + 1].y - BW_MAX_GRADE * ds, floor(i))
     }
   }
+  // never climb faster than the ramp grade either (smooth hand-over from the terrace deck)
+  for (let i = 1; i < samples.length; i++) samples[i].y = Math.max(Math.min(samples[i].y, samples[i - 1].y + BW_MAX_GRADE * ds), floor(i))
   return { samples, length }
 }
 

@@ -21,7 +21,7 @@ export const CATALOG: Record<string, CatalogEntry> = {
     notes: ['Footprint ≈ 4.2 × 7.4 m measured from the plan hatch (±0.3 m).', 'Water Ø32 PE, sewer Ø160 PVC and electricity enter from the north (plan).', 'This object stays fixed in every masterplan option.'],
   },
   extension: {
-    title: 'Planned extension — bedroom, reading nook & 2nd bedroom',
+    title: 'Planned extension — parents’ bedroom (+ kids’ loft above)',
     subtitle: 'Phase 1 — bedroom below; reading nook + 2nd bedroom in the loft above',
     phase: 1,
     status: 'planned',
@@ -137,6 +137,17 @@ CATALOG.carport = {
   description: 'An open carport ≈ 5.6 × 5.2 m for two cars side by side, on slender black steel posts with a low standing-seam roof draining to a slatted timber back wall with storage, wall charger and bike hooks. It stands apart from the house in the east of the plot; a ≈ 3.2 m permeable-paver drive leads from the vehicle gate straight into it.',
   materials: ['Black powder-coated steel posts and beams', 'Standing-seam roof matching the house', 'Vertical timber slat back wall', 'Permeable paver floor with concrete wheel strips'],
   notes: ['Counts as roofed built area (≈ 29 m²). Open carports are often treated more leniently than a garage, but rules differ per municipality — verify.', 'Roof water goes to a gutter on the back wall and can feed a rain tank.'],
+}
+
+CATALOG.bay = {
+  title: 'Family annex — kitchen · dining · living',
+  subtitle: 'Phase 1 — new wing east of the house, 4.2 × 5.9 m',
+  phase: 1,
+  status: 'planned',
+  description:
+    'A new gabled wing dostawione to the east side of the existing house, parallel roof, same cladding and pitch. Inside ≈ 22 m² of open space: kitchen along the north wall (fridge, oven tower, 4-ring hob with hood, sink) with a 2.2 m island and four stools, a round dining table for six, and the living area with the sofa, armchair and wood stove by the big south window. The east wall is a glazed sliding wall to the terrace; the covered loggia runs along the south window.',
+  materials: ['Same black standing-seam roof (40°) and vertical timber cladding as the house', 'Glazed sliding wall to the terrace, big south window', 'Oak floor, whitewashed timber ceiling with tie beams'],
+  notes: ['Footprint 4.2 × 5.9 = 24.8 m². With the house (31.1) and the poured-slab extension (13.9) the building is 69.8 m² — just under the WZ limit of 70 m². Do not add anything else to the footprint.', 'Roof valley where the two gables meet needs a proper gutter detail.', 'Position and size are a design proposal for the architect to confirm.'],
 }
 
 export const FEATURE_NOTES: Record<string, { title: string; notes: string[] }> = {

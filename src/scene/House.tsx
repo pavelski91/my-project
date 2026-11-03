@@ -6,7 +6,7 @@ import { terrainY, TERRACE_DECK_Y } from '../lib/geometry'
 import { B, Cyl, Wall, Glazing, Gable, GableRoof, type Opening } from './prims'
 import { M, flatMat } from './materials'
 import { usePick, useSunState } from './env'
-import { HouseInterior, BedroomInterior } from './HouseInterior'
+import { HouseInterior, BedroomInterior, AnnexInterior } from './HouseInterior'
 
 
 const W = 4.2
@@ -27,7 +27,7 @@ function LongWall({ side, len, ops, mat, y0 }: { side: 1 | -1; len: number; ops:
     <group>
       <Wall L={len} H={EAVE} t={0.07} m={mat} at={[side * (W / 2 - 0.035), 0, 0]} rot={rot} openings={ops} />
       <Wall L={len} H={EAVE} t={0.2} m={M.plaster} at={[side * (W / 2 - 0.17), 0, 0]} rot={rot} openings={ops} />
-      {ops.map((op, i) => (
+      {ops.filter((op) => !op.open).map((op, i) => (
         <Glazing key={i} o={op} wallT={T} at={[side * (W / 2 - 0.1), 0, 0]} rot={rot} glass={M.glass} />
       ))}
       <B at={[side * (W / 2 + 0.002), EAVE - 0.05, 0]} s={[0.02, 0.1, len]} m={M.steel} cast={false} />
@@ -174,21 +174,20 @@ export function House() {
   const y0 = HOUSE_Y0
   const Lx = 7.4
   const Lext = 3.3
-  const Lbay = 1.0
   const zB = (HOUSE_BAY.z0 + HOUSE_BAY.z1) / 2
+  const xB = (HOUSE_BAY.x0 + HOUSE_BAY.x1) / 2
+  const Lann = HOUSE_BAY.z1 - HOUSE_BAY.z0
+  const pickBay = usePick('bay')
 
-  const eastEx: Opening[] = [
-    o(-3.1, -2.7, 0.5, 2.3), // narrow vertical slit window
-    o(1.2, 3.4, 0, 2.25, { mullions: 1, door: true }), // two-panel sliding door to the terrace
-  ]
-  const westEx: Opening[] = [o(-1.95, -1.05, 0, 2.2, { door: true }), o(1.3, 2.7, 1.0, 1.95)] // entrance door (kitchen side) + living window
-  const eastExt: Opening[] = [o(-1.0, 0.2, 0.4, 2.3, { mullions: 1, door: true })] // bedroom: sliding window door
+  const eastEx: Opening[] = [o(0.9, 3.4, 0, 2.3, { open: true })] // wide passage into the family annex (terrace-side slit window sits behind the annex)
+  const westEx: Opening[] = [o(-1.95, -1.05, 0, 2.05, { door: true }), o(1.3, 2.7, 1.0, 1.95)] // entrance door + study window
+  const eastExt: Opening[] = [o(-1.0, 0.2, 0.4, 2.3, { mullions: 1, door: true })]
   const westExt: Opening[] = [o(-0.35, 0.05, 0.5, 2.3)]
-  const northExtOps: Opening[] = [ox(0.3, 1.6, 0.8, 1.95)] // above the bed head
-  const northOps: Opening[] = []
-  const southOps: Opening[] = [ox(-1.55, 1.55, 0.15, 2.7, { mullions: 2 })] // the big south window (now in the kitchen bay)
-  const eastBay: Opening[] = [o(-0.4, 0.4, 0, 2.25, { door: true })] // glazed door from the kitchen to the loggia/terrace
-  const westBay: Opening[] = [o(-0.35, 0.35, 1.0, 2.1)]
+  const northExtOps: Opening[] = [ox(0.3, 1.6, 0.8, 1.95)]
+  const southOps: Opening[] = [ox(-1.2, 1.2, 0.6, 2.3, { mullions: 1 })] // study window in the south gable
+  const eastAnnex: Opening[] = [o(-2.55, 0.1, 0, 2.4, { mullions: 2, door: true }), o(0.9, 2.5, 0.9, 2.3)] // glazed sliding wall to the terrace + window
+  const annexSouth: Opening[] = [ox(-1.75, 1.75, 0.15, 2.7, { mullions: 2 })] // the big south window
+  const annexNorth: Opening[] = [ox(-1.1, 1.1, 1.0, 2.15, { mullions: 1 })]
 
   // house group for the whole footprint: local z origin at centre of full extension scheme
   return (
@@ -200,9 +199,9 @@ export function House() {
         <LongWall side={1} len={Lx} ops={eastEx} mat={M.charred} y0={y0} />
         <LongWall side={-1} len={Lx} ops={westEx} mat={M.charred} y0={y0} />
         {!extOn && <EndWall z={-Lx / 2} ops={[ox(-0.7, 0.7, 1.0, 1.9)]} mat={M.larchWarm} gableMat={M.larchWarm} face={-1} />}
-        {!extOn && <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />}
+        <EndWall z={Lx / 2} ops={southOps} mat={M.larchWarm} gableMat={M.larchWarm} face={1} />
         <group visible={!interiors}>
-          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[extOn ? 0 : 0.3, extOn ? 0 : 0.3]} />
+          <GableRoof W={W} L={Lx} eave={EAVE} pitch={PITCH} endOv={[extOn ? 0 : 0.3, 0.3]} />
         </group>
         {/* skylight */}
         <group position={[-0.95, EAVE + 0.55, 0.4]} rotation={[0, 0, PITCH]}>
@@ -238,16 +237,19 @@ export function House() {
         </group>
       )}
       {extOn && (
-        <group position={[x, y0, zB]}>
-          <B at={[0, -0.18, 0]} s={[W + 0.1, 0.36, Lbay + 0.05]} m={M.concrete} />
-          <B at={[0, 0.0, 0]} s={[W - 0.1, 0.02, Lbay]} m={M.light} cast={false} />
-          <LongWall side={1} len={Lbay} ops={eastBay} mat={charredNew} y0={y0} />
-          <LongWall side={-1} len={Lbay} ops={westBay} mat={charredNew} y0={y0} />
-          <EndWall z={Lbay / 2} ops={southOps} mat={M.larchNew} gableMat={M.larchNew} face={1} />
+        <group position={[xB, y0, zB]} {...pickBay}>
+          <B at={[0, -0.18, 0]} s={[W + 0.1, 0.36, Lann + 0.05]} m={M.concrete} />
+          <B at={[0, 0.0, 0]} s={[W - 0.1, 0.02, Lann]} m={M.light} cast={false} />
+          <LongWall side={1} len={Lann} ops={eastAnnex} mat={charredNew} y0={y0} />
+          <EndWall z={-Lann / 2} ops={annexNorth} mat={M.larchNew} gableMat={M.larchNew} face={-1} />
+          <EndWall z={Lann / 2} ops={annexSouth} mat={M.larchNew} gableMat={M.larchNew} face={1} />
           <group visible={!interiors}>
-            <GableRoof W={W} L={Lbay} eave={EAVE} pitch={PITCH} endOv={[0, 0.35]} />
+            <GableRoof W={W} L={Lann} eave={EAVE} pitch={PITCH} endOv={[0.3, 0.35]} />
           </group>
-          <B at={[W / 2 + 0.09, 1.9, 0.3]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />
+          {[-1.6, 1.4].map((zz, i) => <B key={i} at={[W / 2 + 0.09, 1.9, zz - 1.2 + i * 2.4]} s={[0.1, 0.28, 0.1]} m={M.lamp} cast={false} />)}
+          <AnnexInterior />
+          <pointLight position={[0, 2.2, -1.5]} intensity={4 + 6 * night} distance={8} color="#ffd8a8" decay={1.6} />
+          <pointLight position={[0, 2.4, 1.6]} intensity={4 + 6 * night} distance={8} color="#ffd8a8" decay={1.6} />
         </group>
       )}
       {extOn && <Loggia />}
